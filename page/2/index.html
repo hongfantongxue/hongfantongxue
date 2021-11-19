@@ -65,6 +65,355 @@
     <h1 class="page-type-title"></h1>
     
     
+    <article id="post-flask-Python-编写的轻量级-Web-应用框架" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+      
+
+<h2 itemprop="name">
+  <a class="article-title" href="/2018/11/19/flask-Python-%E7%BC%96%E5%86%99%E7%9A%84%E8%BD%BB%E9%87%8F%E7%BA%A7-Web-%E5%BA%94%E7%94%A8%E6%A1%86%E6%9E%B6/">flask-python 编写的轻量级 Web 应用框架</a>
+</h2>
+
+
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2018/11/19/flask-Python-%E7%BC%96%E5%86%99%E7%9A%84%E8%BD%BB%E9%87%8F%E7%BA%A7-Web-%E5%BA%94%E7%94%A8%E6%A1%86%E6%9E%B6/" class="article-date">
+  <time datetime="2018-11-19T01:36:00.000Z" itemprop="datePublished">2018-11-19</time>
+</a>
+      
+    </div>
+    
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+        
+      
+      
+      <h1 id="flask-demo"><a href="#flask-demo" class="headerlink" title="flask-demo"></a>flask-demo</h1><p>flask: Python 编写的轻量级 Web 应用框架</p>
+<h2 id="1-flask环境准备"><a href="#1-flask环境准备" class="headerlink" title="1.flask环境准备"></a>1.flask环境准备</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">vim requirements.txt</span><br><span class="line">flask</span><br><span class="line">flask_sqlalchemy</span><br><span class="line">mysqlclient</span><br><span class="line">redis</span><br><span class="line"></span><br><span class="line">安装pip install -r requirements.txt</span><br></pre></td></tr></table></figure>
+
+<p>flask学习文档参考:<a target="_blank" rel="noopener" href="http://docs.jinkan.org/docs/flask/">http://docs.jinkan.org/docs/flask/</a></p>
+<h2 id="2-flask第一行代码"><a href="#2-flask第一行代码" class="headerlink" title="2.flask第一行代码"></a>2.flask第一行代码</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">1.初始化：所有的Flask都必须创建程序实例</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line">app = Flask(__name__)</span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">第二部分，路由和视图函数：</span></span><br><span class="line"><span class="string">    客户端发送url给web服务器，web服务器将url转发给flask程序实例，程序实例</span></span><br><span class="line"><span class="string">    需要知道对于每一个url请求启动那一部分代码，所以保存了一个url和python函数的映射关系。</span></span><br><span class="line"><span class="string">    处理url和函数之间关系的程序，称为路由</span></span><br><span class="line"><span class="string">    在flask中，定义路由最简便的方式，是使用程序实例的app.route装饰器，把装饰的函数注册为路由</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/hello&quot;</span></span>)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">hello</span>():</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;hello&quot;</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">第三部分：程序实例用run方法启动flask集成的开发web服务器</span></span><br><span class="line"><span class="string">    __name__ == &#x27;__main__&#x27;是python常用的方法，表示只有直接启动本脚本时候，才用app.run方法</span></span><br><span class="line"><span class="string">    服务器启动后，会启动轮询，等待并处理请求。轮询会一直请求，直到程序停止。</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    app.run(host=<span class="string">&quot;0.0.0.0&quot;</span>, debug=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">flask接收web请求的执行流程</span></span><br><span class="line"><span class="string">    1.浏览器将请求给web服务器，web服务器将请求给app ,</span></span><br><span class="line"><span class="string">    2.app收到请求，通过路由找到对应的视图函数，然后将请求处理，得到一个响应response</span></span><br><span class="line"><span class="string">    3.然后app将响应返回给web服务器，</span></span><br><span class="line"><span class="string">    4.web服务器返回给浏览器，</span></span><br><span class="line"><span class="string">    5.浏览器展示给用户观看，流程完毕。</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="3-结构分层模板"><a href="#3-结构分层模板" class="headerlink" title="3.结构分层模板"></a>3.结构分层模板</h2><h2 id="4-DEBUG调试"><a href="#4-DEBUG调试" class="headerlink" title="4.DEBUG调试"></a>4.DEBUG调试</h2><p>Pycharm断点调试</p>
+<h2 id="5-flask连接数据库"><a href="#5-flask连接数据库" class="headerlink" title="5.flask连接数据库"></a>5.flask连接数据库</h2><p>官方文档参考:<a target="_blank" rel="noopener" href="http://www.pythondoc.com/flask-sqlalchemy/quickstart.html">http://www.pythondoc.com/flask-sqlalchemy/quickstart.html</a></p>
+<h3 id="5-1-数据库连接配置"><a href="#5-1-数据库连接配置" class="headerlink" title="5.1.数据库连接配置"></a>5.1.数据库连接配置</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SQLALCHEMY_DATABASE_URI = &quot;mysql://root:123456@127.0.0.1/demo_test&quot;</span><br><span class="line"><span class="meta">#</span><span class="bash"> 设置每次请求结束后会自动提交数据库的改动</span></span><br><span class="line">SQLALCHEMY_TRACK_MODIFICATIONS = True</span><br><span class="line">SQLALCHEMY_COMMIT_ON_TEARDOWN = True</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="5-2-根据数据库逆向生成model"><a href="#5-2-根据数据库逆向生成model" class="headerlink" title="5.2.根据数据库逆向生成model"></a>5.2.根据数据库逆向生成model</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">将数据库中的所有表放在同一个实体中</span><br><span class="line">flask-sqlacodegen &#x27;mysql://root:123456@127.0.0.1/demo_test&#x27;  --outfile &quot;model/demo_test.py&quot;  --flask</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">将每一个表单独放在同一个实体中</span><br><span class="line">flask-sqlacodegen &#x27;mysql://root:123456@127.0.0.1/demo_test&#x27; --tables employees --outfile &quot;common/models/employees.py&quot;  --flask</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-GET-POST请求"><a href="#6-GET-POST请求" class="headerlink" title="6.GET/POST请求"></a>6.GET/POST请求</h2><h3 id="6-1-get请求查询数据库返回json格式"><a href="#6-1-get请求查询数据库返回json格式" class="headerlink" title="6.1.get请求查询数据库返回json格式"></a>6.1.get请求查询数据库返回json格式</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/get/employee/&quot;</span></span>)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_employee</span>():</span></span><br><span class="line">    employee_id = request.args.get(<span class="string">&quot;employeeId&quot;</span>)</span><br><span class="line">    logging.debug(<span class="string">&quot;employee_id = &#123;0&#125;&quot;</span>.<span class="built_in">format</span>(employee_id))</span><br><span class="line">    <span class="keyword">if</span> employee_id.strip() ==<span class="string">&#x27;&#x27;</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;&quot;</span></span><br><span class="line">    result = Employee.query.<span class="built_in">filter</span>(Employee.<span class="built_in">id</span> == employee_id).<span class="built_in">all</span>()</span><br><span class="line">    <span class="keyword">for</span> employee <span class="keyword">in</span> result:</span><br><span class="line">        data = &#123;<span class="string">&quot;id&quot;</span>: employee.<span class="built_in">id</span>, <span class="string">&quot;lastname&quot;</span>: employee.lastname, <span class="string">&quot;email&quot;</span>: employee.email,</span><br><span class="line">                <span class="string">&quot;salary&quot;</span>: employee.salary, <span class="string">&quot;dept&quot;</span>: employee.dept&#125;</span><br><span class="line">        response = make_response(json.dumps(data, cls=DecimalEncoder, ensure_ascii=<span class="literal">False</span>))</span><br><span class="line">    <span class="keyword">return</span> response</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-2-post请求查询数据库返回json格式"><a href="#6-2-post请求查询数据库返回json格式" class="headerlink" title="6.2.post请求查询数据库返回json格式"></a>6.2.post请求查询数据库返回json格式</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/post/employee/&quot;</span>, methods=[<span class="string">&#x27;POST&#x27;</span>]</span>)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">post_employee</span>():</span></span><br><span class="line">    employee_id = request.form.get(<span class="string">&quot;employeeId&quot;</span>)</span><br><span class="line">    logging.debug(<span class="string">&quot;employee_id = &#123;0&#125;&quot;</span>.<span class="built_in">format</span>(employee_id))</span><br><span class="line">    <span class="keyword">if</span> employee_id.strip() ==<span class="string">&#x27;&#x27;</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;&quot;</span></span><br><span class="line">    result = Employee.query.<span class="built_in">filter</span>(Employee.<span class="built_in">id</span> == employee_id).<span class="built_in">all</span>()</span><br><span class="line">    <span class="keyword">for</span> employee <span class="keyword">in</span> result:</span><br><span class="line">        data = &#123;<span class="string">&quot;id&quot;</span>: employee.<span class="built_in">id</span>, <span class="string">&quot;lastname&quot;</span>: employee.lastname, <span class="string">&quot;email&quot;</span>: employee.email,</span><br><span class="line">                <span class="string">&quot;salary&quot;</span>: employee.salary, <span class="string">&quot;dept&quot;</span>: employee.dept&#125;</span><br><span class="line">        response = make_response(json.dumps(data, cls=DecimalEncoder, ensure_ascii=<span class="literal">False</span>))</span><br><span class="line">    <span class="keyword">return</span> response</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="7-读写redis"><a href="#7-读写redis" class="headerlink" title="7.读写redis"></a>7.读写redis</h2><h3 id="7-1-读写redis代码实现"><a href="#7-1-读写redis代码实现" class="headerlink" title="7.1.读写redis代码实现"></a>7.1.读写redis代码实现</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> redis</span><br><span class="line"><span class="keyword">import</span> pickle</span><br><span class="line"><span class="comment">#  @staticmethod, 表示静态方法</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Redis</span>:</span></span><br><span class="line"><span class="meta">    @staticmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">connect</span>(<span class="params">host=<span class="string">&#x27;localhost&#x27;</span>, port=<span class="number">6379</span>, db=<span class="number">0</span></span>):</span></span><br><span class="line">        r = redis.StrictRedis(host, port, db)</span><br><span class="line">        <span class="keyword">return</span> r</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 将内存数据二进制通过序列号转为文本流，再存入redis</span></span><br><span class="line"><span class="meta">    @staticmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">set_data</span>(<span class="params">r, key, data, ex=<span class="literal">None</span></span>):</span></span><br><span class="line">        r.<span class="built_in">set</span>(pickle.dumps(key), pickle.dumps(data), ex)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 将文本流从redis中读取并反序列化，返回</span></span><br><span class="line"><span class="meta">    @staticmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_data</span>(<span class="params">r, key</span>):</span></span><br><span class="line">        data = r.get(pickle.dumps(key))</span><br><span class="line">        <span class="keyword">if</span> data <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line">        <span class="keyword">return</span> pickle.loads(data)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="8-日志配置"><a href="#8-日志配置" class="headerlink" title="8.日志配置"></a>8.日志配置</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&quot;&quot;&quot;</span><br><span class="line">     # 日志格式</span><br><span class="line">     [时间戳] \t [线程名] \t [日志级别] \t msg</span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line">import logging</span><br><span class="line"></span><br><span class="line">logging.basicConfig(level=logging.DEBUG,# 控制台打印的日志级别</span><br><span class="line">                    filename=&#x27;D:/003code/flask-demo/logs/log_new.log&#x27;,  # 将日志写入log_new.log文件中</span><br><span class="line">                    filemode=&#x27;a&#x27;, # 模式，有w和a，w就是写模式，每次都会重新写日志，覆盖之前的日志</span><br><span class="line">                    # a是追加模式，默认如果不写的话，就是追加模式</span><br><span class="line">                    format=</span><br><span class="line">                    &#x27;[%(asctime)s]    [%(threadName)s]    [%(levelname)s]   %(message)s&#x27;, datefmt=&#x27;%Y-%m-%d %H:%M:%S&#x27;</span><br><span class="line">                    )</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>配置完成后,需要将配置引入manager</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> config.log_conf</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="9-单元测试"><a href="#9-单元测试" class="headerlink" title="9.单元测试"></a>9.单元测试</h2><p>Python Flask，单元测试案例，unittest<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/houyanhua1/article/details/85689951">https://blog.csdn.net/houyanhua1/article/details/85689951</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/feilzhang/article/details/81041819">https://blog.csdn.net/feilzhang/article/details/81041819</a></p>
+<ul>
+<li>单元测试代码</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> unittest</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">from</span> manager <span class="keyword">import</span> app</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TestHello</span>(<span class="params">unittest.TestCase</span>):</span></span><br><span class="line">    <span class="comment"># 测试代码执行之前调用 (方法名固定)</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">setUp</span>(<span class="params">self</span>):</span></span><br><span class="line">        self.app = app</span><br><span class="line">        app.config[<span class="string">&#x27;TESTING&#x27;</span>] = <span class="literal">True</span></span><br><span class="line">        self.client = self.app.test_client()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test_hello</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="comment"># 请求接口</span></span><br><span class="line">        response = self.client.get(<span class="string">&#x27;/&#x27;</span>)</span><br><span class="line">        json_data = response.data</span><br><span class="line">        <span class="comment"># 按照json解析</span></span><br><span class="line">        json_dict = json.loads(json_data)</span><br><span class="line">        code = json_dict.get(<span class="string">&quot;code&quot;</span>)</span><br><span class="line">        <span class="comment"># 使用断言进行验证(判断字符串是否含有code)</span></span><br><span class="line">        self.assertIn(<span class="string">&quot;code&quot;</span>, json_dict)</span><br><span class="line">        <span class="comment"># 使用断言判断code是否为200</span></span><br><span class="line">        self.assertEqual(code, <span class="string">&quot;200&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TestGetEmployee</span>(<span class="params">unittest.TestCase</span>):</span></span><br><span class="line">    <span class="comment"># 测试代码执行之前调用 (方法名固定)</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">setUp</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="comment"># 配置数据库</span></span><br><span class="line">        app.config[<span class="string">&#x27;TESTING&#x27;</span>] = <span class="literal">True</span></span><br><span class="line">        app.config[<span class="string">&#x27;SQLALCHEMY_DATABASE_URI&#x27;</span>] = <span class="string">&#x27;mysql://root:123456@127.0.0.1/demo_test&#x27;</span></span><br><span class="line">        app.config[<span class="string">&quot;SQLALCHEMY_TRACK_MODIFICATIONS&quot;</span>] = <span class="literal">True</span></span><br><span class="line">        app.config[<span class="string">&quot;SQLALCHEMY_COMMIT_ON_TEARDOWN&quot;</span>] = <span class="literal">True</span></span><br><span class="line">        self.app = app</span><br><span class="line">        self.client = self.app.test_client()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test_post_employee</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="comment"># 请求接口</span></span><br><span class="line">        response = self.client.post(<span class="string">&#x27;/post/employee/&#x27;</span>, data=&#123;<span class="string">&quot;employeeId&quot;</span>: <span class="number">2</span>&#125;)</span><br><span class="line">        json_data = response.data</span><br><span class="line">        <span class="comment"># 按照json解析</span></span><br><span class="line">        json_dict = json.loads(json_data)</span><br><span class="line">        <span class="comment"># 使用断言进行验证(判断字符串是否含有lastname)</span></span><br><span class="line">        self.assertIn(<span class="string">&quot;lastname&quot;</span>, json_dict)</span><br><span class="line">        <span class="comment"># 使用断言判断lastname是否为李四</span></span><br><span class="line">        last_name = json_dict.get(<span class="string">&quot;lastname&quot;</span>)</span><br><span class="line">        self.assertEqual(last_name, <span class="string">&quot;李四&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test_get_employee</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="comment"># 请求接口</span></span><br><span class="line">        response = self.client.get(<span class="string">&#x27;/get/employee/?employeeId=2&#x27;</span>)</span><br><span class="line">        json_data = response.data</span><br><span class="line">        <span class="comment"># 按照json解析</span></span><br><span class="line">        json_dict = json.loads(json_data)</span><br><span class="line">        <span class="comment"># 使用断言进行验证(判断字符串是否含有lastname)</span></span><br><span class="line">        self.assertIn(<span class="string">&quot;lastname&quot;</span>, json_dict)</span><br><span class="line">        <span class="comment"># 使用断言判断lastname是否为李四</span></span><br><span class="line">        last_name = json_dict.get(<span class="string">&quot;lastname&quot;</span>)</span><br><span class="line">        self.assertEqual(last_name, <span class="string">&quot;李四&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    unittest.main()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="10-蓝图"><a href="#10-蓝图" class="headerlink" title="10 蓝图"></a>10 蓝图</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">注册路由 - 蓝图</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">待整理.....</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2018/11/19/flask-Python-%E7%BC%96%E5%86%99%E7%9A%84%E8%BD%BB%E9%87%8F%E7%BA%A7-Web-%E5%BA%94%E7%94%A8%E6%A1%86%E6%9E%B6/" data-id="ckw60kwli0006dughaf6y2zyz" class="article-share-link">
+        分享
+      </a>
+      
+    </footer>
+
+  </div>
+
+  
+
+  
+
+</article>
+    
+    <article id="post-数据库服务器环境配置-ubuntu" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+      
+
+<h2 itemprop="name">
+  <a class="article-title" href="/2018/11/01/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE-ubuntu/">数据库服务器环境配置-ubuntu</a>
+</h2>
+
+
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2018/11/01/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE-ubuntu/" class="article-date">
+  <time datetime="2018-11-01T02:41:00.000Z" itemprop="datePublished">2018-11-01</time>
+</a>
+      
+    </div>
+    
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+        
+      
+      
+      <h3 id="1-ubuntu配置yum源"><a href="#1-ubuntu配置yum源" class="headerlink" title="1.ubuntu配置yum源"></a>1.ubuntu配置yum源</h3><h4 id="1-1-安装yum"><a href="#1-1-安装yum" class="headerlink" title="1.1. 安装yum"></a>1.1. <strong>安装yum</strong></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install yum</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-配置yum源"><a href="#1-2-配置yum源" class="headerlink" title="1.2. 配置yum源"></a>1.2. <strong>配置yum源</strong></h4><p>在/etc/yum/repos.d/目录下创建两个文件，fedora-163.repo和fedora-updates-163.repo</p>
+<p> 推荐使用vim编辑器。在终端使用： </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">vim fedora-163.repo</span><br><span class="line"></span><br><span class="line">内容如下:</span><br><span class="line"></span><br><span class="line">[fedora]</span><br><span class="line">name=Fedora 17 - $basearch - 163.com</span><br><span class="line">failovermethod=priority</span><br><span class="line">baseurl=http://mirrors.163.com/fedora/releases/17/Everything/$basearch/os/</span><br><span class="line">mirrorlist=https://mirrors.fedoraproject.org/metalink?repo=fedora-17&amp;arch=$basearch</span><br><span class="line">enabled=1</span><br><span class="line">metadata_expire=7d</span><br><span class="line">gpgcheck=1</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$basearch</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">[fedora-debuginfo]</span><br><span class="line">name=Fedora 17 - $basearch - Debug - 163.com</span><br><span class="line">failovermethod=priority</span><br><span class="line">baseurl=http://mirrors.163.com/fedora/releases/17/Everything/$basearch/debug/</span><br><span class="line">mirrorlist=https://mirrors.fedoraproject.org/metalink?repo=fedora-debug-17&amp;arch=$basearch</span><br><span class="line">enabled=0</span><br><span class="line">metadata_expire=7d</span><br><span class="line">gpgcheck=1</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$basearch</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">[fedora-source]</span><br><span class="line">name=Fedora 17 - Source - 163.com</span><br><span class="line">failovermethod=priority</span><br><span class="line">baseurl=http://mirrors.163.com/fedora/releases/17/Everything/source/SRPMS/</span><br><span class="line">mirrorlist=https://mirrors.fedoraproject.org/metalink?repo=fedora-source-17&amp;arch=$basearch</span><br><span class="line">enabled=0</span><br><span class="line">metadata_expire=7d</span><br><span class="line">gpgcheck=1</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$basearch</span><br></pre></td></tr></table></figure>
+
+<p>vim  fedora-updates-163.repo </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">[updates]</span><br><span class="line">name=Fedora 17 - $basearch - Updates - 163.com</span><br><span class="line">failovermethod=priority</span><br><span class="line">baseurl=http://mirrors.163.com/fedora/updates/17/$basearch/</span><br><span class="line">mirrorlist=https://mirrors.fedoraproject.org/metalink?repo=updates-released-f17&amp;arch=$basearch</span><br><span class="line">enabled=1</span><br><span class="line">gpgcheck=1</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$basearch</span><br><span class="line"> </span><br><span class="line">[updates-debuginfo]</span><br><span class="line">name=Fedora 17 - $basearch - Updates - Debug - 163.com</span><br><span class="line">failovermethod=priority</span><br><span class="line">baseurl=http://mirrors.163.com/fedora/updates/17/$basearch/debug/</span><br><span class="line">mirrorlist=https://mirrors.fedoraproject.org/metalink?repo=updates-released-debug-f17&amp;arch=$basearch</span><br><span class="line">enabled=0</span><br><span class="line">gpgcheck=1</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$basearch</span><br><span class="line"> </span><br><span class="line">[updates-source]</span><br><span class="line">name=Fedora 17 - Updates Source - 163.com</span><br><span class="line">failovermethod=priority</span><br><span class="line">baseurl=http://mirrors.163.com/fedora/updates/17/SRPMS/</span><br><span class="line">mirrorlist=https://mirrors.fedoraproject.org/metalink?repo=updates-released-source-f17&amp;arch=$basearch</span><br><span class="line">enabled=0</span><br><span class="line">gpgcheck=1</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$basearch</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="1-3-执行配置"><a href="#1-3-执行配置" class="headerlink" title="1.3. 执行配置"></a>1.3. <strong>执行配置</strong></h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum makecache</span><br></pre></td></tr></table></figure>
+
+
+
+<p>如果行 yum makecache ,不成功先执行下列命令升级依赖</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br></pre></td></tr></table></figure>
+
+<p>参考:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_42712552&#x2F;article&#x2F;details&#x2F;88363272</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-ubuntu16-0-4安装jdk"><a href="#2-ubuntu16-0-4安装jdk" class="headerlink" title="2.ubuntu16.0.4安装jdk"></a>2.ubuntu16.0.4安装jdk</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">加压缩安装包后,配置环境变量</span><br><span class="line"></span><br><span class="line">vim &#x2F;etc&#x2F;profile</span><br><span class="line"></span><br><span class="line">#JAVA_HOME</span><br><span class="line">export JAVA_HOME&#x3D;&#x2F;opt&#x2F;module&#x2F;1.8.0_181</span><br><span class="line">export PATH&#x3D;$PATH:$JAVA_HOME&#x2F;bin</span><br><span class="line"></span><br><span class="line">让修改后的文件生效</span><br><span class="line">source &#x2F;etc&#x2F;profile</span><br><span class="line"></span><br><span class="line">测试JDK是否安装成功</span><br><span class="line">java -version</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-ubuntu16-0-4安装redis"><a href="#3-ubuntu16-0-4安装redis" class="headerlink" title="3.ubuntu16.0.4安装redis"></a>3.ubuntu16.0.4安装redis</h3><h4 id="3-1-安装redis环境依赖"><a href="#3-1-安装redis环境依赖" class="headerlink" title="3.1.安装redis环境依赖"></a>3.1.安装redis环境依赖</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#安装C程序运行环境</span><br><span class="line">yum -y install gcc-c++</span><br><span class="line"></span><br><span class="line"># 安装tcl</span><br><span class="line"></span><br><span class="line">wget http:&#x2F;&#x2F;downloads.sourceforge.net&#x2F;tcl&#x2F;tcl8.6.1-src.tar.gz  </span><br><span class="line">sudo tar xzvf tcl8.6.1-src.tar.gz  -C &#x2F;usr&#x2F;local&#x2F;  </span><br><span class="line">cd  &#x2F;usr&#x2F;local&#x2F;tcl8.6.1&#x2F;unix&#x2F;  </span><br><span class="line">sudo .&#x2F;configure  </span><br><span class="line">sudo make  </span><br><span class="line">sudo make install   </span><br><span class="line">————————————————</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="3-2-下载-编译和安装redis"><a href="#3-2-下载-编译和安装redis" class="headerlink" title="3.2.下载/编译和安装redis"></a>3.2.下载/编译和安装redis</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#下载redis</span><br><span class="line">wget http:&#x2F;&#x2F;download.redis.io&#x2F;releases&#x2F;redis-3.0.5.tar.gz</span><br><span class="line"></span><br><span class="line">#解压</span><br><span class="line"></span><br><span class="line">#进入到redis安装目录</span><br><span class="line">make MALLOC&#x3D;libc</span><br><span class="line">make</span><br><span class="line">make test &amp;&amp; make install</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="3-3-配置redis-conf"><a href="#3-3-配置redis-conf" class="headerlink" title="3.3.配置redis.conf"></a>3.3.配置redis.conf</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">#在redis安装目录</span><br><span class="line">mkdir logs</span><br><span class="line">mkdir redisdata</span><br><span class="line"></span><br><span class="line">vim redis.conf</span><br><span class="line"></span><br><span class="line">#配置后台启动</span><br><span class="line">daemonize yes</span><br><span class="line">pidfile &#x2F;var&#x2F;run&#x2F;redis_6379.pid</span><br><span class="line">logfile &quot;&#x2F;opt&#x2F;module&#x2F;redis-3.0.5&#x2F;logs&#x2F;redis.log&quot;</span><br><span class="line">dir &#x2F;opt&#x2F;module&#x2F;redis-3.0.5&#x2F;redisdata</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">更改redis密码:</span><br><span class="line">config set requirepass Ikingtec909</span><br><span class="line">刷新验证密码</span><br><span class="line">auth Ikingtec909</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="3-4-启动与连接redis"><a href="#3-4-启动与连接redis" class="headerlink" title="3.4.启动与连接redis"></a>3.4.启动与连接redis</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#启动redis,进入到redis的src下</span><br><span class="line">.&#x2F;redis-server  ..&#x2F;redis.conf</span><br><span class="line"></span><br><span class="line">#连接redis,进入到redis的src下</span><br><span class="line">.&#x2F;redis-cli</span><br><span class="line"></span><br><span class="line">.&#x2F;redis-cli -p 6379 -a Ikingtec909</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="3-5-配置主从架构"><a href="#3-5-配置主从架构" class="headerlink" title="3.5.配置主从架构"></a>3.5.配置主从架构</h4><p>从服务器redis安装和上面相同</p>
+<p>在redis.conf,多添加</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">slaveof 主服务器ip 6379</span><br><span class="line">masterauth  Ikingtec909(密码)</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="4-ubuntu16-0-4安装mysql"><a href="#4-ubuntu16-0-4安装mysql" class="headerlink" title="4.ubuntu16.0.4安装mysql"></a>4.ubuntu16.0.4安装mysql</h3><h4 id="4-1-安装包下载地址"><a href="#4-1-安装包下载地址" class="headerlink" title="4.1.安装包下载地址"></a>4.1.安装包下载地址</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">下载(安装包)</span><br><span class="line"></span><br><span class="line">wget  https:&#x2F;&#x2F;cdn.mysql.com&#x2F;&#x2F;Downloads&#x2F;MySQL-5.7&#x2F;mysql-server_5.7.27-1ubuntu16.04_amd64.deb-bundle.tar</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-2-安装"><a href="#4-2-安装" class="headerlink" title="4.2.安装"></a>4.2.安装</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">解压</span><br><span class="line">tar -xvf mysql-server_5.7.27-1ubuntu16.04_amd64.deb-bundle.tar</span><br><span class="line"></span><br><span class="line">安装</span><br><span class="line">sudo dpkg -i *.deb</span><br><span class="line">sudo apt-get -f install</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-3-登录"><a href="#4-3-登录" class="headerlink" title="4.3.登录"></a>4.3.登录</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql  -u  用户名 –p</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-4-修改一些配置-参考"><a href="#4-4-修改一些配置-参考" class="headerlink" title="4.4.修改一些配置(参考)"></a>4.4.修改一些配置(参考)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">#启动</span><br><span class="line">service mysql start</span><br><span class="line"></span><br><span class="line">#停止</span><br><span class="line">service mysql stop</span><br><span class="line"></span><br><span class="line">#重启</span><br><span class="line">service mysql restart</span><br><span class="line"></span><br><span class="line"># 授权给特定host及用户</span><br><span class="line">登录到mysql</span><br><span class="line">use mysql;</span><br><span class="line">select host,user from user;</span><br><span class="line">update user set host &#x3D; &#39;%&#39; where user &#x3D;&#39;root&#39;;</span><br><span class="line">select host,user from user;</span><br><span class="line"></span><br><span class="line">#更改用户名和密码</span><br><span class="line"></span><br><span class="line">(适用于管理员或者有全局权限的用户重设其它用户的密码)</span><br><span class="line"></span><br><span class="line">进入命令行模式</span><br><span class="line"></span><br><span class="line">mysql -u root -p</span><br><span class="line"></span><br><span class="line">mysql&gt;use mysql;</span><br><span class="line"></span><br><span class="line">mysql&gt; UPDATE user SET password&#x3D;PASSWORD(&quot;new password&quot;) WHERE user&#x3D;&#39;username&#39;;</span><br><span class="line"></span><br><span class="line">示例5.7之后的版本:</span><br><span class="line">UPDATE user SET password&#x3D;PASSWORD(&quot;Ikingtec909&quot;) WHERE user&#x3D;&#39;root&#39;;</span><br><span class="line"></span><br><span class="line">5.7之前的版本:</span><br><span class="line">update mysql.user set authentication_string&#x3D;password(&#39;Ikingtec909&#39;) where user&#x3D;&#39;root&#39;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">mysql&gt; FLUSH PRIVILEGES;</span><br><span class="line"></span><br><span class="line">mysql&gt; quit;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#刷新权限</span><br><span class="line">flush privileges;</span><br><span class="line"></span><br><span class="line">#修改配置文件设置数据写入格式utf-8</span><br><span class="line">vim &#x2F;etc&#x2F;mysql&#x2F;my.cnf</span><br><span class="line"></span><br><span class="line">加入下列配置</span><br><span class="line">[client]</span><br><span class="line">default_character_set&#x3D;utf8</span><br><span class="line"></span><br><span class="line">[mysql]</span><br><span class="line">default_character_set&#x3D;utf8</span><br><span class="line"></span><br><span class="line">[mysqld]</span><br><span class="line">character_set_server&#x3D;utf8</span><br><span class="line"></span><br><span class="line">#修改配置文件远程访问</span><br><span class="line"></span><br><span class="line">vim &#x2F;etc&#x2F;mysql&#x2F;mysql.conf.d&#x2F;mysqld.cnf</span><br><span class="line"></span><br><span class="line">bind-address&#x3D; 0.0.0.0</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-5-重启mysql-确保防火墙允许-3306-端口开启"><a href="#4-5-重启mysql-确保防火墙允许-3306-端口开启" class="headerlink" title="4.5.重启mysql,  确保防火墙允许 3306 端口开启"></a>4.5.重启mysql,  <strong>确保防火墙允许 3306 端口开启</strong></h4><h4 id="4-6-mysq主从架构"><a href="#4-6-mysq主从架构" class="headerlink" title="4.6.mysq主从架构"></a>4.6.mysq主从架构</h4><h5 id="4-6-1-mysql主服务器配置"><a href="#4-6-1-mysql主服务器配置" class="headerlink" title="4.6.1.mysql主服务器配置"></a>4.6.1.mysql主服务器配置</h5><p>增加下列配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">#这是数据库ID,此ID是唯一的，主库默认为1，其他从库以此ID进行递增，ID值不能重复，否则会同步出错；</span><br><span class="line">server-id &#x3D; 1</span><br><span class="line">#默认 binlog日志存放路径，mysql-bin 日志名称</span><br><span class="line">#二进制日志文件，开启binlog,此项为必填项，否则不能同步数据；</span><br><span class="line">log-bin&#x3D;&#x2F;var&#x2F;lib&#x2F;mysql&#x2F;mysql-bin</span><br><span class="line">#日志中会记录成每一行数据被修改的形式</span><br><span class="line">#binlog日志格式</span><br><span class="line">binlog-format&#x3D;ROW</span><br><span class="line">#需要同步的数据库，如果需要同步多个数据库；则继续添加此项</span><br><span class="line">binlog-do-db &#x3D; ik_test_DB</span><br><span class="line"># binlog-do-db &#x3D; slaveDB1</span><br><span class="line"># binlog-do-db &#x3D; slaveDB2</span><br><span class="line">#不需要同步的数据库</span><br><span class="line">binlog-ignore-db &#x3D; mysql</span><br></pre></td></tr></table></figure>
+
+<p>配置完成后数据库需要重启,然后查看binlog日志是否开启</p>
+<p> show variables like ‘log_bin’; </p>
+<h5 id="4-6-2-mysql从服务器配置"><a href="#4-6-2-mysql从服务器配置" class="headerlink" title="4.6.2.mysql从服务器配置"></a>4.6.2.mysql从服务器配置</h5><p>增加下列配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line"></span><br><span class="line">#从数据库配置</span><br><span class="line">server-id&#x3D;2</span><br><span class="line">relay-log&#x3D;mysql-relay</span><br><span class="line">#开启binlog,此项为必填项，否则不能同步数据；</span><br><span class="line">log-bin&#x3D;&#x2F;var&#x2F;lib&#x2F;mysql&#x2F;mysql-bin</span><br><span class="line">#binlog格式</span><br><span class="line">binlog-format&#x3D;ROW</span><br><span class="line">#此参数的含义是：slave数据库将二进制日志写入自己的binlog中</span><br><span class="line">log_slave_updates&#x3D;1</span><br><span class="line"></span><br><span class="line">#监控的数据库</span><br><span class="line">binlog-do-db&#x3D;ik_test_DB</span><br></pre></td></tr></table></figure>
+
+<p>数据库重启:</p>
+<p>service mysql restart</p>
+<h5 id="4-6-3-在主服务器建立账户-并授权从服务器"><a href="#4-6-3-在主服务器建立账户-并授权从服务器" class="headerlink" title="4.6.3.在主服务器建立账户,并授权从服务器"></a>4.6.3.在主服务器建立账户,并授权从服务器</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GRANT REPLICATION SLAVE ON *.* TO &#39;slave&#39;@&#39;从机器数据库IP&#39; IDENTIFIED BY &#39;123456&#39;</span><br></pre></td></tr></table></figure>
+
+<h5 id="4-6-4-主服务器执行执行show-master-status"><a href="#4-6-4-主服务器执行执行show-master-status" class="headerlink" title="4.6.4.主服务器执行执行show master status"></a>4.6.4.主服务器执行执行show master status</h5><p>show master status</p>
+<p>1.记录下File和Position的值</p>
+<p>2.执行完此步骤后不要再操作主服务器MYSQL，防止主服务器状态值变化</p>
+<h5 id="4-6-5-从服务器复制主服务器数据"><a href="#4-6-5-从服务器复制主服务器数据" class="headerlink" title="4.6.5.从服务器复制主服务器数据"></a>4.6.5.从服务器复制主服务器数据</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">CHANGE MASTER TO MASTER_HOST&#x3D;&#39;主机IP&#39;,MASTER_USER&#x3D;&#39;用户名&#39;,MASTER_PASSWORD&#x3D;&#39;密码&#39;,MASTER_LOG_FILE&#x3D;&#39;File名字&#39;,MASTER_LOG_POS&#x3D;Position数字</span><br><span class="line"></span><br><span class="line">CHANGE MASTER TO MASTER_HOST&#x3D;&#39;172.26.69.85&#39;,MASTER_USER&#x3D;&#39;slave&#39;,MASTER_PASSWORD&#x3D;&#39;slave123&#39;,MASTER_LOG_FILE&#x3D;&#39;mysql-bin.000001&#39;,MASTER_LOG_POS&#x3D;441;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">CHANGE MASTER TO MASTER_HOST&#x3D;&#39;172.26.69.85&#39;,MASTER_USER&#x3D;&#39;slave&#39;,MASTER_PASSWORD&#x3D;&#39;Ikingtec909&#39;,MASTER_LOG_FILE&#x3D;&#39;mysql-bin.000005&#39;,MASTER_LOG_POS&#x3D;2232;</span><br></pre></td></tr></table></figure>
+
+<h5 id="4-6-6-从服务器启动slave"><a href="#4-6-6-从服务器启动slave" class="headerlink" title="4.6.6.从服务器启动slave"></a>4.6.6.从服务器启动slave</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">start slave</span><br></pre></td></tr></table></figure>
+
+<h5 id="4-6-7-查看slave状态"><a href="#4-6-7-查看slave状态" class="headerlink" title="4.6.7.查看slave状态"></a>4.6.7.查看slave状态</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">show slave status\G;</span><br><span class="line">下面两个参数都是Yes，则说明主从配置成功！</span><br><span class="line">Slave_IO_Running: Yes</span><br><span class="line">Slave_SQL_Running: Yes</span><br></pre></td></tr></table></figure>
+
+<h5 id="4-6-8-主机新建库、新建表、insert记录，从机复制"><a href="#4-6-8-主机新建库、新建表、insert记录，从机复制" class="headerlink" title="4.6.8.主机新建库、新建表、insert记录，从机复制"></a>4.6.8.主机新建库、新建表、insert记录，从机复制</h5><h5 id="4-6-9-停止从机复制功能"><a href="#4-6-9-停止从机复制功能" class="headerlink" title="4.6.9.停止从机复制功能"></a>4.6.9.停止从机复制功能</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stop slave</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-7-在从服务器加canal"><a href="#4-7-在从服务器加canal" class="headerlink" title="4.7.在从服务器加canal"></a>4.7.在从服务器加canal</h4><h5 id="4-7-1-新增一个用户权限"><a href="#4-7-1-新增一个用户权限" class="headerlink" title="4.7.1.新增一个用户权限"></a>4.7.1.新增一个用户权限</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">GRANT SELECT, REPLICATION SLAVE, REPLICATION CLIENT ON *.* TO &#39;canal&#39;@&#39;%&#39; IDENTIFIED </span><br><span class="line">BY &#39;canal&#39; ;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="4-7-2-增加配置-这些配置在上述操作中已经添加"><a href="#4-7-2-增加配置-这些配置在上述操作中已经添加" class="headerlink" title="4.7.2.增加配置(这些配置在上述操作中已经添加)"></a>4.7.2.增加配置(这些配置在上述操作中已经添加)</h5><p>增加下列配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#binlog格式</span><br><span class="line">binlog-format&#x3D;ROW</span><br><span class="line">#此参数的含义是：slave数据库将二进制日志写入自己的binlog中</span><br><span class="line">log_slave_updates&#x3D;1</span><br><span class="line"></span><br><span class="line">#监控的数据库</span><br><span class="line">binlog-do-db&#x3D;ik_test_DB</span><br></pre></td></tr></table></figure>
+
+<h5 id="4-7-3-重启mysql"><a href="#4-7-3-重启mysql" class="headerlink" title="4.7.3.重启mysql"></a>4.7.3.重启mysql</h5><p>service mysql restart</p>
+<h5 id="4-7-4-安装canal"><a href="#4-7-4-安装canal" class="headerlink" title="4.7.4.安装canal"></a>4.7.4.安装canal</h5><p><a target="_blank" rel="noopener" href="https://github.com/alibaba/canal/releases">https://github.com/alibaba/canal/releases</a></p>
+<h5 id="4-7-5-修改canal配置"><a href="#4-7-5-修改canal配置" class="headerlink" title="4.7.5.修改canal配置"></a>4.7.5.修改canal配置</h5><p>vim conf/canal.properties</p>
+<p>这个文件是canal的基本通用配置，主要关心一下端口号，不改的话默认就是11111</p>
+<p> vim conf/example/instance.properties</p>
+<p>instance.properties是针对要追踪的mysql的实例配置</p>
+<p>修改下列配置:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#不能与mysql的server-id重复</span><br><span class="line">canal.instance.mysql.slaveId&#x3D;20</span><br><span class="line"></span><br><span class="line"># position info,配置mysqlip和端口号</span><br><span class="line">canal.instance.master.address&#x3D;172.26.69.84:3306</span><br><span class="line"></span><br><span class="line"># username&#x2F;password</span><br><span class="line">canal.instance.dbUsername&#x3D;canal</span><br><span class="line">canal.instance.dbPassword&#x3D;canal</span><br><span class="line">canal.instance.connectionCharset &#x3D; UTF-8</span><br><span class="line"></span><br><span class="line">#设置监听的库</span><br><span class="line">canal.instance.defaultDatabaseName &#x3D;ik_test_DB</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="4-7-6-启动canal"><a href="#4-7-6-启动canal" class="headerlink" title="4.7.6.启动canal"></a>4.7.6.启动canal</h5><p>/bin/startup.sh</p>
+<p>jps   =&gt; CanalLauncher进程</p>
+<p>如果起动不成功,排查问题参考</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">1.需要修改canal.properties配置，但是官网没有讲解。（大概率）进入canal解压文件 ，编辑conf&#x2F;canal.properties文件</span><br><span class="line">vim conf&#x2F;canal.properties</span><br><span class="line">有这么一行</span><br><span class="line">canal.instance.parser.parallelThreadSize &#x3D; 16</span><br><span class="line">默认是被注释掉的，需要打开注释,然后重启canal</span><br><span class="line">cd bin</span><br><span class="line">.&#x2F;restart.sh</span><br><span class="line">这种是第一次配置时，大概率碰到的情况。</span><br></pre></td></tr></table></figure>
+
+<h5 id="4-7-6-测试"><a href="#4-7-6-测试" class="headerlink" title="4.7.6.测试"></a>4.7.6.测试</h5><p>参考地址:</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/alibaba/canal/wiki/QuickStart">https://github.com/alibaba/canal/wiki/QuickStart</a></p>
+<p> <a target="_blank" rel="noopener" href="https://github.com/alibaba/canal/wiki/ClientExample">https://github.com/alibaba/canal/wiki/ClientExample</a> </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2018/11/01/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE-ubuntu/" data-id="ckw60kwlk000cdugh8qhr166g" class="article-share-link">
+        分享
+      </a>
+      
+    </footer>
+
+  </div>
+
+  
+
+  
+
+</article>
+    
+    <article id="post-数据中台建设" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+      
+
+<h2 itemprop="name">
+  <a class="article-title" href="/2018/05/20/%E6%95%B0%E6%8D%AE%E4%B8%AD%E5%8F%B0%E5%BB%BA%E8%AE%BE/">数据中台建设</a>
+</h2>
+
+
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2018/05/20/%E6%95%B0%E6%8D%AE%E4%B8%AD%E5%8F%B0%E5%BB%BA%E8%AE%BE/" class="article-date">
+  <time datetime="2018-05-20T06:28:00.000Z" itemprop="datePublished">2018-05-20</time>
+</a>
+      
+    </div>
+    
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+        
+      
+      
+      <p><img src="/img/image-20210713183612991.png" alt="image-20210713183612991"></p>
+<p><img src="/img/image-20210724121303860.png" alt="image-20210724121303860"></p>
+<p><img src="/img/image-20210724121521554.png" alt="image-20210724121521554"></p>
+<p>1.数据仓库:在企业管理和决策中面向主题的、集成的、与时间相关的，不可修改的数据集合</p>
+<p>2.数据湖(Data Lake):一个以原始格式存储数据的存储库或系统</p>
+<p>3.数据中台:避免数据的重复计算,通过数据服务化,提高数据的共享能力,赋能数据应用</p>
+<p><img src="/img/image-20210724122127504.png" alt="image-20210724122127504"></p>
+<p>数据平台建设前的五大问题:</p>
+<p>1.指标口径不一致</p>
+<p>2.数据重复建设</p>
+<p>3.取数效率低</p>
+<p>4.数据质量差</p>
+<p>5.数据成本线上增长</p>
+<p><img src="/img/image-20210724122911209.png" alt="image-20210724122911209"></p>
+<p>数据中台建设三板斧</p>
+<p>方法论 组织 技术</p>
+<p><img src="/img/image-20210724173412012.png" alt="image-20210724173412012"></p>
+<p><img src="/img/image-20210724173436864.png" alt="image-20210724173436864"></p>
+<p>元数据中心的关键目标和技术实现方案</p>
+<p><img src="/img/image-20210728170137924.png" alt="image-20210728170137924"></p>
+<p>统一管理纷繁杂乱的数据指标</p>
+<p><img src="/img/image-20210728170326445.png" alt="image-20210728170326445"></p>
+<p><img src="/img/image-20210728170523964.png" alt="image-20210728170523964"></p>
+<p><img src="/img/image-20210728170700373.png" alt="image-20210728170700373"></p>
+<p>数据模型设计</p>
+<p>表命名规范</p>
+<p><img src="/img/image-20210728171940899.png" alt="image-20210728171940899"></p>
+<p><img src="/img/image-20210728172225553.png" alt="image-20210728172225553"></p>
+<p>数据有问题,如何提高数据质量</p>
+<p><img src="/img/image-20210728172315078.png" alt="image-20210728172315078"></p>
+<p>稽查校验任务</p>
+<p><img src="/img/image-20210728172841216.png" alt="image-20210728172841216"></p>
+<p><img src="/img/image-20210728173507306.png" alt="image-20210728173507306"></p>
+<p>成本优化方案</p>
+<p><img src="/img/image-20210728173746843.png" alt="image-20210728173746843"></p>
+<p>OneData:数据发现、指标管理、模型设计、数据质量、成本优化</p>
+<p>数据服务到底解决了什么问题</p>
+<p><img src="/img/image-20210728175450772.png" alt="image-20210728175450772"></p>
+<p><img src="/img/image-20210728183746600.png" alt="image-20210728183746600"></p>
+<p>数据安全</p>
+<p><img src="/img/image-20210728183937262.png" alt="image-20210728183937262"></p>
+<p><img src="/img/image-20210728184150118.png" alt="image-20210728184150118"></p>
+<p>数据中台的作用</p>
+<p><img src="/img/image-20210728184525314.png" alt="image-20210728184525314"></p>
+<p><img src="/img/image-20210728185259916.png" alt="image-20210728185259916"></p>
+<p>数据研发流程</p>
+<p><img src="/img/image-20210728185500129.png" alt="image-20210728185500129"></p>
+<p>数据中台项目流程协作</p>
+<p><img src="/img/image-20210728185710369.png" alt="image-20210728185710369"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2018/05/20/%E6%95%B0%E6%8D%AE%E4%B8%AD%E5%8F%B0%E5%BB%BA%E8%AE%BE/" data-id="ckw60kwlk000adughg6to95lf" class="article-share-link">
+        分享
+      </a>
+      
+    </footer>
+
+  </div>
+
+  
+
+  
+
+</article>
+    
     <article id="post-离线数据仓库建设" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 
@@ -313,7 +662,7 @@ group by item
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2018/05/12/%E7%A6%BB%E7%BA%BF%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93%E5%BB%BA%E8%AE%BE/" data-id="ckw5zx9qv000e3xghfoj023d4" class="article-share-link">
+      <a data-url="http://example.com/2018/05/12/%E7%A6%BB%E7%BA%BF%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93%E5%BB%BA%E8%AE%BE/" data-id="ckw60kwll000edugh5bmj6kh4" class="article-share-link">
         分享
       </a>
       
@@ -401,7 +750,7 @@ group by item
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2018/05/12/%E7%A6%BB%E7%BA%BF%E6%95%B0%E4%BB%93%E5%BB%BA%E8%AE%BE2/" data-id="ckw5zx9qu000d3xghguv8ebuu" class="article-share-link">
+      <a data-url="http://example.com/2018/05/12/%E7%A6%BB%E7%BA%BF%E6%95%B0%E4%BB%93%E5%BB%BA%E8%AE%BE2/" data-id="ckw60kwll000ddughdc1w1cnz" class="article-share-link">
         分享
       </a>
       
@@ -470,7 +819,7 @@ group by item
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2016/11/19/Tensorflow/" data-id="ckw5zx9qs00073xgh78hvgcv2" class="article-share-link">
+      <a data-url="http://example.com/2016/11/19/Tensorflow/" data-id="ckw60kwlh0003dughgu1nah7q" class="article-share-link">
         分享
       </a>
       

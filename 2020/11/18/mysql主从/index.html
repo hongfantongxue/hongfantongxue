@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  
+  
+  <meta name="description" content="记录技术点滴">
+  
+  <title>
+    mysql主从 |
+    
+    个人博客
+  </title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+    
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<script src="/js/pace.min.js"></script>
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <main class="content">
+    <section class="outer">
+  <article id="post-mysql主从" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+      
+
+<h1 class="article-title" itemprop="name">
+  mysql主从
+</h1>
+
+
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/11/18/mysql%E4%B8%BB%E4%BB%8E/" class="article-date">
+  <time datetime="2020-11-18T02:37:00.000Z" itemprop="datePublished">2020-11-18</time>
+</a>
+      
+    </div>
+    
+
+    
+    
+<div class="tocbot"></div>
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+      
+      <p>mysql主从结构以及加canal1主2从 + 1 canal从库 </p>
+<h3 id="1-mysql主从结构配置"><a href="#1-mysql主从结构配置" class="headerlink" title="1.mysql主从结构配置"></a>1.mysql主从结构配置</h3><h4 id="1-1-主服务器配置-开启binlog日志"><a href="#1-1-主服务器配置-开启binlog日志" class="headerlink" title="1.1.主服务器配置(开启binlog日志)"></a>1.1.主服务器配置(开启binlog日志)</h4><p>在mysql配置文件中my.cnf中,添加下列配置( 如果没有my.cnf 或者是集成的环境 找到my.ini 中 [mysqld] 添加如下 )</p>
+<p>vim /etc/my.cnf</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">#这是数据库ID,此ID是唯一的，主库默认为1，其他从库以此ID进行递增，ID值不能重复，否则会同步出错；</span><br><span class="line">server-id &#x3D; 1 </span><br><span class="line">#默认 binlog日志存放路径，mysql-bin 日志名称</span><br><span class="line">#二进制日志文件，开启binlog,此项为必填项，否则不能同步数据；</span><br><span class="line">log-bin&#x3D;&#x2F;var&#x2F;lib&#x2F;mysql&#x2F;mysql-bin</span><br><span class="line">#日志中会记录成每一行数据被修改的形式</span><br><span class="line">#binlog默认的格式</span><br><span class="line">binlog-format&#x3D;STATEMENT</span><br><span class="line">#需要同步的数据库，如果需要同步多个数据库；则继续添加此项</span><br><span class="line">binlog-do-db &#x3D; slaveDB </span><br><span class="line"># binlog-do-db &#x3D; slaveDB1</span><br><span class="line"># binlog-do-db &#x3D; slaveDB2</span><br><span class="line">#不需要同步的数据库</span><br><span class="line">binlog-ignore-db &#x3D; mysql </span><br></pre></td></tr></table></figure>
+
+<p>配置完成后数据库需要重启,然后查看binlog日志是否开启</p>
+<p> show variables like ‘log_bin’; </p>
+<h4 id="1-2-从服务器配置-第一台"><a href="#1-2-从服务器配置-第一台" class="headerlink" title="1.2.从服务器配置(第一台)"></a>1.2.从服务器配置(第一台)</h4><p>在mysql配置文件中my.cnf中,添加下列配置</p>
+<p>vim /etc/my.cnf</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#从机服务id</span><br><span class="line">#中继日志</span><br><span class="line"></span><br><span class="line">[mysqld]</span><br><span class="line">server-id&#x3D;2</span><br><span class="line">relay-log&#x3D;mysql-relay</span><br><span class="line"></span><br><span class="line">#监控的数据库(方便加canal)</span><br><span class="line">binlog-do-db&#x3D;gmallXXXXX</span><br></pre></td></tr></table></figure>
+
+<p>数据库重启:</p>
+<p>service mysqld restart</p>
+<h4 id="1-3-从服务器配置-第二台"><a href="#1-3-从服务器配置-第二台" class="headerlink" title="1.3.从服务器配置(第二台)"></a>1.3.从服务器配置(第二台)</h4><p>在mysql配置文件中my.cnf中,添加下列配置</p>
+<p>vim /etc/my.cnf</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#从机服务id</span><br><span class="line">#中继日志</span><br><span class="line"></span><br><span class="line">[mysqld]</span><br><span class="line">server-id&#x3D;3</span><br><span class="line">relay-log&#x3D;mysql-relay</span><br><span class="line"></span><br><span class="line">#监控的数据库(方便加canal)</span><br><span class="line">binlog-do-db&#x3D;gmallXXXXX</span><br></pre></td></tr></table></figure>
+
+<p>数据库重启:</p>
+<p>service mysqld restart</p>
+<h4 id="1-4-在主服务器建立账户-并授权从服务器"><a href="#1-4-在主服务器建立账户-并授权从服务器" class="headerlink" title="1.4.在主服务器建立账户,并授权从服务器"></a>1.4.在主服务器建立账户,并授权从服务器</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">GRANT REPLICATION SLAVE ON *.* TO &#39;slave&#39;@&#39;从机器数据库IP&#39; IDENTIFIED BY &#39;123456&#39;</span><br><span class="line"></span><br><span class="line">例如</span><br><span class="line"></span><br><span class="line">GRANT REPLICATION SLAVE ON *.* TO &#39;slave01&#39;@&#39;192.168.100.201 IDENTIFIED BY &#39;123456&#39;;</span><br><span class="line">GRANT REPLICATION SLAVE ON *.* TO &#39;slave02&#39;@&#39;192.168.100.202 IDENTIFIED BY &#39;123456&#39;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-5-主服务器执行执行show-master-status"><a href="#1-5-主服务器执行执行show-master-status" class="headerlink" title="1.5.主服务器执行执行show master status"></a>1.5.主服务器执行执行show master status</h4><p>show master status</p>
+<p>1.记录下File和Position的值</p>
+<p>  <img src="%5Cimg%5CImage1111.png" alt="f8e3e171277d4c18f86dc0819cd1145e.png">   </p>
+<p>2.执行完此步骤后不要再操作主服务器MYSQL，防止主服务器状态值变化</p>
+<h4 id="1-6-两台从服务器复制主服务器数据"><a href="#1-6-两台从服务器复制主服务器数据" class="headerlink" title="1.6.两台从服务器复制主服务器数据"></a>1.6.两台从服务器复制主服务器数据</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">CHANGE MASTER TO MASTER_HOST&#x3D;&#39;主机IP&#39;,MASTER_USER&#x3D;&#39;用户名&#39;,MASTER_PASSWORD&#x3D;&#39;密码&#39;,MASTER_LOG_FILE&#x3D;&#39;File名字&#39;,MASTER_LOG_POS&#x3D;Position数字</span><br><span class="line"></span><br><span class="line">例如:</span><br><span class="line">CHANGE MASTER TO MASTER_HOST&#x3D;&#39;192.168.100.203&#39;,MASTER_USER&#x3D;&#39;slave01&#39;,MASTER_PASSWORD&#x3D;&#39;123456&#39;,MASTER_LOG_FILE&#x3D;&#39;mysql-bin.000023&#39;,MASTER_LOG_POS&#x3D;223;</span><br><span class="line"></span><br><span class="line">CHANGE MASTER TO MASTER_HOST&#x3D;&#39;192.168.100.203&#39;,MASTER_USER&#x3D;&#39;slave02&#39;,MASTER_PASSWORD&#x3D;&#39;123456&#39;,MASTER_LOG_FILE&#x3D;&#39;mysql-bin.000023&#39;,MASTER_LOG_POS&#x3D;223;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="1-7-从服务器启动slave"><a href="#1-7-从服务器启动slave" class="headerlink" title="1.7.从服务器启动slave"></a>1.7.从服务器启动slave</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">start slave</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-8-查看slave状态"><a href="#1-8-查看slave状态" class="headerlink" title="1.8.查看slave状态"></a>1.8.查看slave状态</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">show slave status</span><br><span class="line">下面两个参数都是Yes，则说明主从配置成功！</span><br><span class="line">Slave_IO_Running: Yes</span><br><span class="line">Slave_SQL_Running: Yes</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-9-主机新建库、新建表、insert记录，从机复制"><a href="#1-9-主机新建库、新建表、insert记录，从机复制" class="headerlink" title="1.9.主机新建库、新建表、insert记录，从机复制"></a>1.9.主机新建库、新建表、insert记录，从机复制</h4><h4 id="1-10-停止从机复制功能"><a href="#1-10-停止从机复制功能" class="headerlink" title="1.10.停止从机复制功能"></a>1.10.停止从机复制功能</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stop slave</span><br></pre></td></tr></table></figure>
+
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><p>server UUID,不能一样</p>
+<h3 id="2-在一台从服务器加canal"><a href="#2-在一台从服务器加canal" class="headerlink" title="2.在一台从服务器加canal"></a>2.在一台从服务器加canal</h3><h4 id="2-1-新增一个用户权限"><a href="#2-1-新增一个用户权限" class="headerlink" title="2.1.新增一个用户权限"></a>2.1.新增一个用户权限</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">GRANT SELECT, REPLICATION SLAVE, REPLICATION CLIENT ON *.* TO &#39;canal&#39;@&#39;%&#39; IDENTIFIED </span><br><span class="line">BY &#39;canal&#39; ;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-2-新增一个用户权限"><a href="#2-2-新增一个用户权限" class="headerlink" title="2.2.新增一个用户权限"></a>2.2.新增一个用户权限</h4><p>修改/etc/my.cnf文件</p>
+<p>添加(上述配置已经修改)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#监控的数据库</span><br><span class="line">binlog-do-db&#x3D;gmallXXXXX</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-3-重启mysql"><a href="#2-3-重启mysql" class="headerlink" title="2.3.重启mysql"></a>2.3.重启mysql</h4><p>service mysqld restart</p>
+<h4 id="2-4-安装canal"><a href="#2-4-安装canal" class="headerlink" title="2.4.安装canal"></a>2.4.安装canal</h4><h5 id="2-4-1-canal的下载"><a href="#2-4-1-canal的下载" class="headerlink" title="2.4.1.canal的下载"></a>2.4.1.canal的下载</h5><p><a target="_blank" rel="noopener" href="https://github.com/alibaba/canal/releases">https://github.com/alibaba/canal/releases</a></p>
+<h5 id="2-4-2-修改canal的配置"><a href="#2-4-2-修改canal的配置" class="headerlink" title="2.4.2.修改canal的配置"></a>2.4.2.修改canal的配置</h5><p>vim conf/canal.properties</p>
+<p>这个文件是canal的基本通用配置，主要关心一下端口号，不改的话默认就是11111</p>
+<p>  <img src="%5Cimg%5CImage1111.png" alt="c38c09850f24a47d176f2dfd5f593767.png"></p>
+<p> vim conf/example/instance.properties</p>
+<p>instance.properties是针对要追踪的mysql的实例配置</p>
+<p><img src="/img%5CImage001.png"></p>
+<h5 id="2-4-3-启动canal"><a href="#2-4-3-启动canal" class="headerlink" title="2.4.3.启动canal"></a>2.4.3.启动canal</h5><p>/bin/startup.sh</p>
+<p>![](/img\Image [2].png)</p>
+<h5 id="2-4-4-测试"><a href="#2-4-4-测试" class="headerlink" title="2.4.4.测试"></a>2.4.4.测试</h5><p>参考地址:</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/alibaba/canal/wiki/QuickStart">https://github.com/alibaba/canal/wiki/QuickStart</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2020/11/18/mysql%E4%B8%BB%E4%BB%8E/" data-id="ckw60kwlj0008dughdcu51o6c" class="article-share-link">
+        分享
+      </a>
+      
+    </footer>
+
+  </div>
+
+  
+  
+<nav class="article-nav">
+  
+  <a href="/2020/11/19/git%E4%BD%BF%E7%94%A8/" class="article-nav-link">
+    <strong class="article-nav-caption">前一篇</strong>
+    <div class="article-nav-title">
+      
+      git使用
+      
+    </div>
+  </a>
+  
+  
+  <a href="/2020/01/02/Flink%E5%9F%BA%E7%A1%80-Window-Watermark/" class="article-nav-link">
+    <strong class="article-nav-caption">后一篇</strong>
+    <div class="article-nav-title">Flink基础-Window&amp;Watermark</div>
+  </a>
+  
+</nav>
+
+  
+
+  
+  
+  
+  
+
+</article>
+</section>
+    <footer class="footer">
+  <div class="outer">
+    <div class="float-right">
+      <ul class="list-inline">
+  
+  <li><i class="fe fe-smile-alt"></i> <span id="busuanzi_value_site_uv"></span></li>
+  
+  <li><i class="fe fe-bookmark"></i> <span id="busuanzi_value_page_pv"></span></li>
+  
+</ul>
+    </div>
+    <ul class="list-inline">
+      <li>个人博客 &copy; 2021</li>
+      
+        <li>ZHWANGART</li>
+      
+      <li>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></li>
+      <li>theme  <a target="_blank" rel="noopener" href="https://github.com/zhwangart/hexo-theme-ocean">Ocean</a></li>
+    </ul>
+  </div>
+</footer>
+  </main>
+  <aside class="sidebar">
+    <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/hexo.svg" alt="个人博客"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">Home</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">Archives</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/gallery">Gallery</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">About</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="搜索">
+        <i class="fe fe-search"></i>
+        搜索
+      </a>
+    </li>
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="fe fe-feed"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+  </aside>
+  
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/copybtn.js"></script>
+
+
+
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+  tocbot.init({
+    tocSelector: '.tocbot',
+    contentSelector: '.article-entry',
+    headingSelector: 'h1, h2, h3, h4, h5, h6',
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    positionFixedSelector: '.tocbot',
+    positionFixedClass: 'is-position-fixed',
+    fixedSidebarOffset: 'auto',
+  });
+</script>
+
+
+
+<script src="/js/ocean.js"></script>
+
+</body>
+
+</html>

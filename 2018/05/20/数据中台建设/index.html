@@ -10,7 +10,7 @@
   <meta name="description" content="记录技术点滴">
   
   <title>
-    MapReduce |
+    数据中台建设 |
     
     个人博客
   </title>
@@ -33,7 +33,7 @@
 <body>
   <main class="content">
     <section class="outer">
-  <article id="post-MapReduce" class="article article-type-post" itemscope
+  <article id="post-数据中台建设" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 
   <div class="article-inner">
@@ -42,7 +42,7 @@
       
 
 <h1 class="article-title" itemprop="name">
-  MapReduce
+  数据中台建设
 </h1>
 
 
@@ -52,8 +52,8 @@
 
     
     <div class="article-meta">
-      <a href="/2019/05/08/MapReduce/" class="article-date">
-  <time datetime="2019-05-08T13:59:00.000Z" itemprop="datePublished">2019-05-08</time>
+      <a href="/2018/05/20/%E6%95%B0%E6%8D%AE%E4%B8%AD%E5%8F%B0%E5%BB%BA%E8%AE%BE/" class="article-date">
+  <time datetime="2018-05-20T06:28:00.000Z" itemprop="datePublished">2018-05-20</time>
 </a>
       
     </div>
@@ -61,35 +61,66 @@
 
     
     
-<div class="tocbot"></div>
-
     
 
     <div class="article-entry" itemprop="articleBody">
       
       
       
-      <h2 id="1-简介"><a href="#1-简介" class="headerlink" title="1.简介"></a>1.简介</h2><p>map:映射<br>将一组数据按照规则 映射为一组<br>数据条数不会发生变化</p>
-<p>例如：<br>select age+1 from table1;</p>
-<p>reduce:规约 汇总 数据条数会发生变化</p>
-<p>例如：<br>group by</p>
-<p>shuffle 洗牌 数据根据key进行网络传输 规整到一起，按规则计算</p>
-<p>shuffle 因为会网络传输，会拉长计算的时间，能不shuffle就不shuffle</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="2-架构"><a href="#2-架构" class="headerlink" title="2.架构"></a>2.架构</h2><p>计算：cpu+内存</p>
-<p>ResourceManager(rm) 主<br>ApplicationsManager 应用管理器 作业 程序<br>ResourceScheduler     资源管理器 </p>
-<p>NodeManager(nm) 从</p>
-<p>container</p>
-<hr>
-<p>Linux两个机制：<br>1.oom-killer机制</p>
-<p>当Linux服务器某个进程使用内存超标 Linux机器为了保护自己，主动杀死进程释放内存</p>
-<p>2./tmp 目录<br>30天自动删除机制</p>
+      <p><img src="/img/image-20210713183612991.png" alt="image-20210713183612991"></p>
+<p><img src="/img/image-20210724121303860.png" alt="image-20210724121303860"></p>
+<p><img src="/img/image-20210724121521554.png" alt="image-20210724121521554"></p>
+<p>1.数据仓库:在企业管理和决策中面向主题的、集成的、与时间相关的，不可修改的数据集合</p>
+<p>2.数据湖(Data Lake):一个以原始格式存储数据的存储库或系统</p>
+<p>3.数据中台:避免数据的重复计算,通过数据服务化,提高数据的共享能力,赋能数据应用</p>
+<p><img src="/img/image-20210724122127504.png" alt="image-20210724122127504"></p>
+<p>数据平台建设前的五大问题:</p>
+<p>1.指标口径不一致</p>
+<p>2.数据重复建设</p>
+<p>3.取数效率低</p>
+<p>4.数据质量差</p>
+<p>5.数据成本线上增长</p>
+<p><img src="/img/image-20210724122911209.png" alt="image-20210724122911209"></p>
+<p>数据中台建设三板斧</p>
+<p>方法论 组织 技术</p>
+<p><img src="/img/image-20210724173412012.png" alt="image-20210724173412012"></p>
+<p><img src="/img/image-20210724173436864.png" alt="image-20210724173436864"></p>
+<p>元数据中心的关键目标和技术实现方案</p>
+<p><img src="/img/image-20210728170137924.png" alt="image-20210728170137924"></p>
+<p>统一管理纷繁杂乱的数据指标</p>
+<p><img src="/img/image-20210728170326445.png" alt="image-20210728170326445"></p>
+<p><img src="/img/image-20210728170523964.png" alt="image-20210728170523964"></p>
+<p><img src="/img/image-20210728170700373.png" alt="image-20210728170700373"></p>
+<p>数据模型设计</p>
+<p>表命名规范</p>
+<p><img src="/img/image-20210728171940899.png" alt="image-20210728171940899"></p>
+<p><img src="/img/image-20210728172225553.png" alt="image-20210728172225553"></p>
+<p>数据有问题,如何提高数据质量</p>
+<p><img src="/img/image-20210728172315078.png" alt="image-20210728172315078"></p>
+<p>稽查校验任务</p>
+<p><img src="/img/image-20210728172841216.png" alt="image-20210728172841216"></p>
+<p><img src="/img/image-20210728173507306.png" alt="image-20210728173507306"></p>
+<p>成本优化方案</p>
+<p><img src="/img/image-20210728173746843.png" alt="image-20210728173746843"></p>
+<p>OneData:数据发现、指标管理、模型设计、数据质量、成本优化</p>
+<p>数据服务到底解决了什么问题</p>
+<p><img src="/img/image-20210728175450772.png" alt="image-20210728175450772"></p>
+<p><img src="/img/image-20210728183746600.png" alt="image-20210728183746600"></p>
+<p>数据安全</p>
+<p><img src="/img/image-20210728183937262.png" alt="image-20210728183937262"></p>
+<p><img src="/img/image-20210728184150118.png" alt="image-20210728184150118"></p>
+<p>数据中台的作用</p>
+<p><img src="/img/image-20210728184525314.png" alt="image-20210728184525314"></p>
+<p><img src="/img/image-20210728185259916.png" alt="image-20210728185259916"></p>
+<p>数据研发流程</p>
+<p><img src="/img/image-20210728185500129.png" alt="image-20210728185500129"></p>
+<p>数据中台项目流程协作</p>
+<p><img src="/img/image-20210728185710369.png" alt="image-20210728185710369"></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/05/08/MapReduce/" data-id="ckw60kwlh0002dughffwj914h" class="article-share-link">
+      <a data-url="http://example.com/2018/05/20/%E6%95%B0%E6%8D%AE%E4%B8%AD%E5%8F%B0%E5%BB%BA%E8%AE%BE/" data-id="ckw60kwlk000adughg6to95lf" class="article-share-link">
         分享
       </a>
       
@@ -101,19 +132,19 @@
   
 <nav class="article-nav">
   
-  <a href="/2019/06/24/scala%E5%9F%BA%E7%A1%80/" class="article-nav-link">
+  <a href="/2018/11/01/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE-ubuntu/" class="article-nav-link">
     <strong class="article-nav-caption">前一篇</strong>
     <div class="article-nav-title">
       
-      scala基础01
+      数据库服务器环境配置-ubuntu
       
     </div>
   </a>
   
   
-  <a href="/2018/11/19/flask-Python-%E7%BC%96%E5%86%99%E7%9A%84%E8%BD%BB%E9%87%8F%E7%BA%A7-Web-%E5%BA%94%E7%94%A8%E6%A1%86%E6%9E%B6/" class="article-nav-link">
+  <a href="/2018/05/12/%E7%A6%BB%E7%BA%BF%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93%E5%BB%BA%E8%AE%BE/" class="article-nav-link">
     <strong class="article-nav-caption">后一篇</strong>
-    <div class="article-nav-title">flask-python 编写的轻量级 Web 应用框架</div>
+    <div class="article-nav-title">离线数据仓库建设</div>
   </a>
   
 </nav>
