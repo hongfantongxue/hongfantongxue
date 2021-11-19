@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+  <meta name="description" content="记录技术点滴">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    flask-python 编写的轻量级 Web 应用框架 |
+    
+    个人博客</title>
+  
+  <link rel="shortcut icon" href="/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<script src="/js/pace.min.js"></script>
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <main class="content">
+    <section class="outer">
+  <article id="post-flask-Python-编写的轻量级-Web-应用框架" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+      
+
+<h1 class="article-title" itemprop="name">
+  flask-python 编写的轻量级 Web 应用框架
+</h1>
+
+
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2018/11/19/flask-Python-%E7%BC%96%E5%86%99%E7%9A%84%E8%BD%BB%E9%87%8F%E7%BA%A7-Web-%E5%BA%94%E7%94%A8%E6%A1%86%E6%9E%B6/" class="article-date">
+  <time datetime="2018-11-19T01:36:00.000Z" itemprop="datePublished">2018-11-19</time>
+</a>
+      
+    </div>
+    
+
+    
+    
+<div class="tocbot"></div>
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+      
+      <h1 id="flask-demo"><a href="#flask-demo" class="headerlink" title="flask-demo"></a>flask-demo</h1><p>flask: Python 编写的轻量级 Web 应用框架</p>
+<h2 id="1-flask环境准备"><a href="#1-flask环境准备" class="headerlink" title="1.flask环境准备"></a>1.flask环境准备</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">vim requirements.txt</span><br><span class="line">flask</span><br><span class="line">flask_sqlalchemy</span><br><span class="line">mysqlclient</span><br><span class="line">redis</span><br><span class="line"></span><br><span class="line">安装pip install -r requirements.txt</span><br></pre></td></tr></table></figure>
+
+<p>flask学习文档参考:<a target="_blank" rel="noopener" href="http://docs.jinkan.org/docs/flask/">http://docs.jinkan.org/docs/flask/</a></p>
+<h2 id="2-flask第一行代码"><a href="#2-flask第一行代码" class="headerlink" title="2.flask第一行代码"></a>2.flask第一行代码</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">1.初始化：所有的Flask都必须创建程序实例</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line">app = Flask(__name__)</span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">第二部分，路由和视图函数：</span></span><br><span class="line"><span class="string">    客户端发送url给web服务器，web服务器将url转发给flask程序实例，程序实例</span></span><br><span class="line"><span class="string">    需要知道对于每一个url请求启动那一部分代码，所以保存了一个url和python函数的映射关系。</span></span><br><span class="line"><span class="string">    处理url和函数之间关系的程序，称为路由</span></span><br><span class="line"><span class="string">    在flask中，定义路由最简便的方式，是使用程序实例的app.route装饰器，把装饰的函数注册为路由</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/hello&quot;</span></span>)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">hello</span>():</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;hello&quot;</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">第三部分：程序实例用run方法启动flask集成的开发web服务器</span></span><br><span class="line"><span class="string">    __name__ == &#x27;__main__&#x27;是python常用的方法，表示只有直接启动本脚本时候，才用app.run方法</span></span><br><span class="line"><span class="string">    服务器启动后，会启动轮询，等待并处理请求。轮询会一直请求，直到程序停止。</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    app.run(host=<span class="string">&quot;0.0.0.0&quot;</span>, debug=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">flask接收web请求的执行流程</span></span><br><span class="line"><span class="string">    1.浏览器将请求给web服务器，web服务器将请求给app ,</span></span><br><span class="line"><span class="string">    2.app收到请求，通过路由找到对应的视图函数，然后将请求处理，得到一个响应response</span></span><br><span class="line"><span class="string">    3.然后app将响应返回给web服务器，</span></span><br><span class="line"><span class="string">    4.web服务器返回给浏览器，</span></span><br><span class="line"><span class="string">    5.浏览器展示给用户观看，流程完毕。</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="3-结构分层模板"><a href="#3-结构分层模板" class="headerlink" title="3.结构分层模板"></a>3.结构分层模板</h2><h2 id="4-DEBUG调试"><a href="#4-DEBUG调试" class="headerlink" title="4.DEBUG调试"></a>4.DEBUG调试</h2><p>Pycharm断点调试</p>
+<h2 id="5-flask连接数据库"><a href="#5-flask连接数据库" class="headerlink" title="5.flask连接数据库"></a>5.flask连接数据库</h2><p>官方文档参考:<a target="_blank" rel="noopener" href="http://www.pythondoc.com/flask-sqlalchemy/quickstart.html">http://www.pythondoc.com/flask-sqlalchemy/quickstart.html</a></p>
+<h3 id="5-1-数据库连接配置"><a href="#5-1-数据库连接配置" class="headerlink" title="5.1.数据库连接配置"></a>5.1.数据库连接配置</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SQLALCHEMY_DATABASE_URI = &quot;mysql://root:123456@127.0.0.1/demo_test&quot;</span><br><span class="line"><span class="meta">#</span><span class="bash"> 设置每次请求结束后会自动提交数据库的改动</span></span><br><span class="line">SQLALCHEMY_TRACK_MODIFICATIONS = True</span><br><span class="line">SQLALCHEMY_COMMIT_ON_TEARDOWN = True</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="5-2-根据数据库逆向生成model"><a href="#5-2-根据数据库逆向生成model" class="headerlink" title="5.2.根据数据库逆向生成model"></a>5.2.根据数据库逆向生成model</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">将数据库中的所有表放在同一个实体中</span><br><span class="line">flask-sqlacodegen &#x27;mysql://root:123456@127.0.0.1/demo_test&#x27;  --outfile &quot;model/demo_test.py&quot;  --flask</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">将每一个表单独放在同一个实体中</span><br><span class="line">flask-sqlacodegen &#x27;mysql://root:123456@127.0.0.1/demo_test&#x27; --tables employees --outfile &quot;common/models/employees.py&quot;  --flask</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-GET-POST请求"><a href="#6-GET-POST请求" class="headerlink" title="6.GET/POST请求"></a>6.GET/POST请求</h2><h3 id="6-1-get请求查询数据库返回json格式"><a href="#6-1-get请求查询数据库返回json格式" class="headerlink" title="6.1.get请求查询数据库返回json格式"></a>6.1.get请求查询数据库返回json格式</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/get/employee/&quot;</span></span>)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_employee</span>():</span></span><br><span class="line">    employee_id = request.args.get(<span class="string">&quot;employeeId&quot;</span>)</span><br><span class="line">    logging.debug(<span class="string">&quot;employee_id = &#123;0&#125;&quot;</span>.<span class="built_in">format</span>(employee_id))</span><br><span class="line">    <span class="keyword">if</span> employee_id.strip() ==<span class="string">&#x27;&#x27;</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;&quot;</span></span><br><span class="line">    result = Employee.query.<span class="built_in">filter</span>(Employee.<span class="built_in">id</span> == employee_id).<span class="built_in">all</span>()</span><br><span class="line">    <span class="keyword">for</span> employee <span class="keyword">in</span> result:</span><br><span class="line">        data = &#123;<span class="string">&quot;id&quot;</span>: employee.<span class="built_in">id</span>, <span class="string">&quot;lastname&quot;</span>: employee.lastname, <span class="string">&quot;email&quot;</span>: employee.email,</span><br><span class="line">                <span class="string">&quot;salary&quot;</span>: employee.salary, <span class="string">&quot;dept&quot;</span>: employee.dept&#125;</span><br><span class="line">        response = make_response(json.dumps(data, cls=DecimalEncoder, ensure_ascii=<span class="literal">False</span>))</span><br><span class="line">    <span class="keyword">return</span> response</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-2-post请求查询数据库返回json格式"><a href="#6-2-post请求查询数据库返回json格式" class="headerlink" title="6.2.post请求查询数据库返回json格式"></a>6.2.post请求查询数据库返回json格式</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/post/employee/&quot;</span>, methods=[<span class="string">&#x27;POST&#x27;</span>]</span>)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">post_employee</span>():</span></span><br><span class="line">    employee_id = request.form.get(<span class="string">&quot;employeeId&quot;</span>)</span><br><span class="line">    logging.debug(<span class="string">&quot;employee_id = &#123;0&#125;&quot;</span>.<span class="built_in">format</span>(employee_id))</span><br><span class="line">    <span class="keyword">if</span> employee_id.strip() ==<span class="string">&#x27;&#x27;</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;&quot;</span></span><br><span class="line">    result = Employee.query.<span class="built_in">filter</span>(Employee.<span class="built_in">id</span> == employee_id).<span class="built_in">all</span>()</span><br><span class="line">    <span class="keyword">for</span> employee <span class="keyword">in</span> result:</span><br><span class="line">        data = &#123;<span class="string">&quot;id&quot;</span>: employee.<span class="built_in">id</span>, <span class="string">&quot;lastname&quot;</span>: employee.lastname, <span class="string">&quot;email&quot;</span>: employee.email,</span><br><span class="line">                <span class="string">&quot;salary&quot;</span>: employee.salary, <span class="string">&quot;dept&quot;</span>: employee.dept&#125;</span><br><span class="line">        response = make_response(json.dumps(data, cls=DecimalEncoder, ensure_ascii=<span class="literal">False</span>))</span><br><span class="line">    <span class="keyword">return</span> response</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="7-读写redis"><a href="#7-读写redis" class="headerlink" title="7.读写redis"></a>7.读写redis</h2><h3 id="7-1-读写redis代码实现"><a href="#7-1-读写redis代码实现" class="headerlink" title="7.1.读写redis代码实现"></a>7.1.读写redis代码实现</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> redis</span><br><span class="line"><span class="keyword">import</span> pickle</span><br><span class="line"><span class="comment">#  @staticmethod, 表示静态方法</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Redis</span>:</span></span><br><span class="line"><span class="meta">    @staticmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">connect</span>(<span class="params">host=<span class="string">&#x27;localhost&#x27;</span>, port=<span class="number">6379</span>, db=<span class="number">0</span></span>):</span></span><br><span class="line">        r = redis.StrictRedis(host, port, db)</span><br><span class="line">        <span class="keyword">return</span> r</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 将内存数据二进制通过序列号转为文本流，再存入redis</span></span><br><span class="line"><span class="meta">    @staticmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">set_data</span>(<span class="params">r, key, data, ex=<span class="literal">None</span></span>):</span></span><br><span class="line">        r.<span class="built_in">set</span>(pickle.dumps(key), pickle.dumps(data), ex)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 将文本流从redis中读取并反序列化，返回</span></span><br><span class="line"><span class="meta">    @staticmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_data</span>(<span class="params">r, key</span>):</span></span><br><span class="line">        data = r.get(pickle.dumps(key))</span><br><span class="line">        <span class="keyword">if</span> data <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line">        <span class="keyword">return</span> pickle.loads(data)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="8-日志配置"><a href="#8-日志配置" class="headerlink" title="8.日志配置"></a>8.日志配置</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&quot;&quot;&quot;</span><br><span class="line">     # 日志格式</span><br><span class="line">     [时间戳] \t [线程名] \t [日志级别] \t msg</span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line">import logging</span><br><span class="line"></span><br><span class="line">logging.basicConfig(level=logging.DEBUG,# 控制台打印的日志级别</span><br><span class="line">                    filename=&#x27;D:/003code/flask-demo/logs/log_new.log&#x27;,  # 将日志写入log_new.log文件中</span><br><span class="line">                    filemode=&#x27;a&#x27;, # 模式，有w和a，w就是写模式，每次都会重新写日志，覆盖之前的日志</span><br><span class="line">                    # a是追加模式，默认如果不写的话，就是追加模式</span><br><span class="line">                    format=</span><br><span class="line">                    &#x27;[%(asctime)s]    [%(threadName)s]    [%(levelname)s]   %(message)s&#x27;, datefmt=&#x27;%Y-%m-%d %H:%M:%S&#x27;</span><br><span class="line">                    )</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>配置完成后,需要将配置引入manager</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> config.log_conf</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="9-单元测试"><a href="#9-单元测试" class="headerlink" title="9.单元测试"></a>9.单元测试</h2><p>Python Flask，单元测试案例，unittest<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/houyanhua1/article/details/85689951">https://blog.csdn.net/houyanhua1/article/details/85689951</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/feilzhang/article/details/81041819">https://blog.csdn.net/feilzhang/article/details/81041819</a></p>
+<ul>
+<li>单元测试代码</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> unittest</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">from</span> manager <span class="keyword">import</span> app</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TestHello</span>(<span class="params">unittest.TestCase</span>):</span></span><br><span class="line">    <span class="comment"># 测试代码执行之前调用 (方法名固定)</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">setUp</span>(<span class="params">self</span>):</span></span><br><span class="line">        self.app = app</span><br><span class="line">        app.config[<span class="string">&#x27;TESTING&#x27;</span>] = <span class="literal">True</span></span><br><span class="line">        self.client = self.app.test_client()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test_hello</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="comment"># 请求接口</span></span><br><span class="line">        response = self.client.get(<span class="string">&#x27;/&#x27;</span>)</span><br><span class="line">        json_data = response.data</span><br><span class="line">        <span class="comment"># 按照json解析</span></span><br><span class="line">        json_dict = json.loads(json_data)</span><br><span class="line">        code = json_dict.get(<span class="string">&quot;code&quot;</span>)</span><br><span class="line">        <span class="comment"># 使用断言进行验证(判断字符串是否含有code)</span></span><br><span class="line">        self.assertIn(<span class="string">&quot;code&quot;</span>, json_dict)</span><br><span class="line">        <span class="comment"># 使用断言判断code是否为200</span></span><br><span class="line">        self.assertEqual(code, <span class="string">&quot;200&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TestGetEmployee</span>(<span class="params">unittest.TestCase</span>):</span></span><br><span class="line">    <span class="comment"># 测试代码执行之前调用 (方法名固定)</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">setUp</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="comment"># 配置数据库</span></span><br><span class="line">        app.config[<span class="string">&#x27;TESTING&#x27;</span>] = <span class="literal">True</span></span><br><span class="line">        app.config[<span class="string">&#x27;SQLALCHEMY_DATABASE_URI&#x27;</span>] = <span class="string">&#x27;mysql://root:123456@127.0.0.1/demo_test&#x27;</span></span><br><span class="line">        app.config[<span class="string">&quot;SQLALCHEMY_TRACK_MODIFICATIONS&quot;</span>] = <span class="literal">True</span></span><br><span class="line">        app.config[<span class="string">&quot;SQLALCHEMY_COMMIT_ON_TEARDOWN&quot;</span>] = <span class="literal">True</span></span><br><span class="line">        self.app = app</span><br><span class="line">        self.client = self.app.test_client()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test_post_employee</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="comment"># 请求接口</span></span><br><span class="line">        response = self.client.post(<span class="string">&#x27;/post/employee/&#x27;</span>, data=&#123;<span class="string">&quot;employeeId&quot;</span>: <span class="number">2</span>&#125;)</span><br><span class="line">        json_data = response.data</span><br><span class="line">        <span class="comment"># 按照json解析</span></span><br><span class="line">        json_dict = json.loads(json_data)</span><br><span class="line">        <span class="comment"># 使用断言进行验证(判断字符串是否含有lastname)</span></span><br><span class="line">        self.assertIn(<span class="string">&quot;lastname&quot;</span>, json_dict)</span><br><span class="line">        <span class="comment"># 使用断言判断lastname是否为李四</span></span><br><span class="line">        last_name = json_dict.get(<span class="string">&quot;lastname&quot;</span>)</span><br><span class="line">        self.assertEqual(last_name, <span class="string">&quot;李四&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test_get_employee</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="comment"># 请求接口</span></span><br><span class="line">        response = self.client.get(<span class="string">&#x27;/get/employee/?employeeId=2&#x27;</span>)</span><br><span class="line">        json_data = response.data</span><br><span class="line">        <span class="comment"># 按照json解析</span></span><br><span class="line">        json_dict = json.loads(json_data)</span><br><span class="line">        <span class="comment"># 使用断言进行验证(判断字符串是否含有lastname)</span></span><br><span class="line">        self.assertIn(<span class="string">&quot;lastname&quot;</span>, json_dict)</span><br><span class="line">        <span class="comment"># 使用断言判断lastname是否为李四</span></span><br><span class="line">        last_name = json_dict.get(<span class="string">&quot;lastname&quot;</span>)</span><br><span class="line">        self.assertEqual(last_name, <span class="string">&quot;李四&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    unittest.main()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="10-蓝图"><a href="#10-蓝图" class="headerlink" title="10 蓝图"></a>10 蓝图</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">注册路由 - 蓝图</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">待整理.....</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2018/11/19/flask-Python-%E7%BC%96%E5%86%99%E7%9A%84%E8%BD%BB%E9%87%8F%E7%BA%A7-Web-%E5%BA%94%E7%94%A8%E6%A1%86%E6%9E%B6/" data-id="ckw5qe3o200077sghcnc5a7q9" class="article-share-link">
+        分享
+      </a>
+      
+    </footer>
+
+  </div>
+
+  
+  
+<nav class="article-nav">
+  
+  <a href="/2019/05/08/MapReduce/" class="article-nav-link">
+    <strong class="article-nav-caption">前一篇</strong>
+    <div class="article-nav-title">
+      
+      MapReduce
+      
+    </div>
+  </a>
+  
+  
+  <a href="/2018/05/12/%E7%A6%BB%E7%BA%BF%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93%E5%BB%BA%E8%AE%BE/" class="article-nav-link">
+    <strong class="article-nav-caption">后一篇</strong>
+    <div class="article-nav-title">离线数据仓库建设</div>
+  </a>
+  
+</nav>
+
+  
+
+  
+  
+  
+  
+
+</article>
+</section>
+    <footer class="footer">
+  <div class="outer">
+    <div class="float-right">
+      <ul class="list-inline">
+  
+  <li><i class="fe fe-smile-alt"></i> <span id="busuanzi_value_site_uv"></span></li>
+  
+  <li><i class="fe fe-bookmark"></i> <span id="busuanzi_value_page_pv"></span></li>
+  
+</ul>
+    </div>
+    <ul class="list-inline">
+      <li>个人博客 &copy; 2021</li>
+      
+        <li>京ICP备17054916号-2</li>
+      
+      <li>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></li>
+      <li>theme  <a target="_blank" rel="noopener" href="https://github.com/zhwangart/hexo-theme-ocean">Ocean</a></li>
+    </ul>
+  </div>
+</footer>
+  </main>
+  <aside class="sidebar">
+    <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/hexo.svg" alt="个人博客"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">Home</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">Archives</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/gallery">Gallery</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">About</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="搜索">
+        <i class="fe fe-search"></i>
+        搜索
+      </a>
+    </li>
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="fe fe-feed"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+  </aside>
+  
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/copybtn.js"></script>
+
+
+
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+  tocbot.init({
+    tocSelector: '.tocbot',
+    contentSelector: '.article-entry',
+    headingSelector: 'h1, h2, h3, h4, h5, h6',
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    positionFixedSelector: '.tocbot',
+    positionFixedClass: 'is-position-fixed',
+    fixedSidebarOffset: 'auto',
+  });
+</script>
+
+
+
+<script src="/js/ocean.js"></script>
+
+</body>
+
+</html>
