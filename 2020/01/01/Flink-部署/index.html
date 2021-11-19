@@ -144,7 +144,7 @@
 
 
 
-<p><img src="/img%5Cimage-20211028175200869.png" alt="image-20211028175200869"></p>
+<p><img src="/img/image-20211028175200869.png" alt="image-20211028175200869"></p>
 <p>提交Job到standalone集群</p>
 <p>常用提交任务的方式有两种，分别是命令提交和Web页面提交</p>
 <ol>
@@ -157,7 +157,7 @@
 </ol>
 <p>在Web中指定Jar包的位置、主类路径、并行数等</p>
 <p>web.submit.enable: true一定是true，否则不支持Web提交Application</p>
-<p><img src="/img%5Cimage-20211028175451364.png" alt="image-20211028175451364"></p>
+<p><img src="/img/image-20211028175451364.png" alt="image-20211028175451364"></p>
 <ol start="3">
 <li>启动scala-shell测试</li>
 </ol>
@@ -167,9 +167,9 @@
 <p>默认情况下，每个flink集群只有一个JobManager，这将导致一个单点故障(SPOF single-point-of-failure)：如果JobManager挂了，则不能提交新的任务，并且运行中的程序也会失败。</p>
 <p>使用JobManager HA，集群可以从JobManager故障中恢复，从而避免SPOF</p>
 <p>Standalone模式（独立模式）下JobManager的高可用性的基本思想是，任何时候都有一个 Active JobManager ，并且多个Standby JobManagers 。 Standby JobManagers可以在Master JobManager挂掉的情况下接管集群成为Master JobManager。 这样保证了没有单点故障，一旦某一个Standby JobManager接管集群，程序就可以继续运行。 Standby JobManager和Active JobManager实例之间没有明确区别。 每个JobManager可以成为Active或Standby节点</p>
-<p><img src="/img%5Cimage-20211102145556454.png" alt="image-20211102145556454"></p>
+<p><img src="/img/image-20211102145556454.png" alt="image-20211102145556454"></p>
 <p><strong>集群角色划分</strong></p>
-<p><img src="/img%5Cimage-20211102145819490.png" alt="image-20211102145819490"></p>
+<p><img src="/img/image-20211102145819490.png" alt="image-20211102145819490"></p>
 <p><strong>安装步骤</strong></p>
 <ol>
 <li>修改配置文件conf/flflink-conf.yaml</li>
@@ -198,7 +198,7 @@
 <p>Yarn等 多套计算框架都可以基于Yarn运行，充分利用集群资源</p>
 <p>（2）基于Yarn的运行模式降低维护成本</p>
 <p><strong>运行流程</strong></p>
-<p><img src="/img%5Cimage-20211102150503236.png" alt="image-20211102150503236"></p>
+<p><img src="/img/image-20211102150503236.png" alt="image-20211102150503236"></p>
 <ol>
 <li><p> 每当创建一个新flink的yarn session的时候，客户端会首先检查要请求的资源(containers和memory)是否可用。然后，将包含flflink相关的jar包盒配置上传到HDFS</p>
 </li>
@@ -222,7 +222,7 @@
 </ul>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">启动：yarn-session.sh -n 3 -s 3 -nm flink-session -d -q </span><br><span class="line">关闭：yarn application -kill applicationId</span><br><span class="line"></span><br><span class="line">yarn-session选项:</span><br><span class="line">-n,--container &lt;arg&gt;：在yarn中启动container的个数，实质就是TaskManager的个数</span><br><span class="line">-s,--slots &lt;arg&gt;：每个TaskManager管理的Slot个数</span><br><span class="line">-nm,--name &lt;arg&gt;:给当前的yarn-session(Flink集群)起一个名字</span><br><span class="line">-d,--detached:后台独立模式启动，守护进程</span><br><span class="line">-tm,--taskManagerMemory &lt;arg&gt;：TaskManager的内存大小 单位：MB</span><br><span class="line">-jm,--jobManagerMemory &lt;arg&gt;：JobManager的内存大小 单位：MB</span><br><span class="line">-q,--query：显示yarn集群可用资源（内存、core）</span><br></pre></td></tr></table></figure>
 
-<p><img src="/img%5Cimage-20211102154806981.png" alt="image-20211102154806981"></p>
+<p><img src="/img/image-20211102154806981.png" alt="image-20211102154806981"></p>
 <ul>
 <li>提交Flink Job到yarn-session集群中运行</li>
 </ul>
@@ -251,17 +251,17 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn-session.sh -n 3 -s 3 -nm flink-session -d</span><br></pre></td></tr></table></figure>
 
 <p>通过yarn web ui 找到ApplicationMaster，发现此时的JobManager是在node02启动，现在kill掉 JobManager进程 kill -9 进程号</p>
-<p><img src="/img%5Cimage-20211102155717734.png" alt="image-20211102155717734"></p>
-<p><img src="/img%5Cimage-20211102155747764.png" alt="image-20211102155747764"></p>
-<p><img src="/img%5Cimage-20211102155805687.png" alt="image-20211102155805687"></p>
+<p><img src="/img/image-20211102155717734.png" alt="image-20211102155717734"></p>
+<p><img src="/img/image-20211102155747764.png" alt="image-20211102155747764"></p>
+<p><img src="/img/image-20211102155805687.png" alt="image-20211102155805687"></p>
 <ul>
 <li>再次查看 发现JobManager切换到node03</li>
 </ul>
-<p><img src="/img%5Cimage-20211102155850049.png" alt="image-20211102155850049"></p>
+<p><img src="/img/image-20211102155850049.png" alt="image-20211102155850049"></p>
 <ul>
 <li>查看node03日志</li>
 </ul>
-<p><img src="/img%5Cimage-20211102155924638.png" alt="image-20211102155924638"></p>
+<p><img src="/img/image-20211102155924638.png" alt="image-20211102155924638"></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2020-04-08 22:21:36,044 INFO org.apache.flink.yarn.YarnResourceManager - ResourceManager akka.tcp://flink@node03:60599/user/resourcemanager was granted leadership with fencing token 94c94c3d68ed799374303fad7447418b</span><br></pre></td></tr></table></figure>
 
 <p>取消job 开始Run a Flink job on YARN模式测试</p>
@@ -281,7 +281,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2020/01/01/Flink-%E9%83%A8%E7%BD%B2/" data-id="ckw5zswwe00010ighet4u0hj8" class="article-share-link">
+      <a data-url="http://example.com/2020/01/01/Flink-%E9%83%A8%E7%BD%B2/" data-id="ckw5zx9qr00033xghg2ihdow4" class="article-share-link">
         分享
       </a>
       

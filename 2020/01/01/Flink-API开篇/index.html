@@ -83,10 +83,10 @@
 <p>transformation将产生的数据进行各种业务逻辑的数据处理</p>
 <p>最终由sink输出到外部（console、kafka、redis、DB……）</p>
 <p>基于Flink开发的程序都能够映射成一个Dataflows</p>
-<p><img src="/img%5Cimage-20211102161450067.png" alt="image-20211102161450067"></p>
+<p><img src="/img/image-20211102161450067.png" alt="image-20211102161450067"></p>
 <p>当source数据源的数量比较大或计算逻辑相对比较复杂的情况下，需要提高并行度来处理数据，采用并行数据流</p>
 <p>通过设置不同算子的并行度 source并行度设置为2 map也是2…. 代表会启动多个并行的线程来处理数据</p>
-<p><img src="/img%5Cimage-20211102161638405.png" alt="image-20211102161638405"></p>
+<p><img src="/img/image-20211102161638405.png" alt="image-20211102161638405"></p>
 <h4 id="1-3-开发环境配置"><a href="#1-3-开发环境配置" class="headerlink" title="1.3.开发环境配置"></a>1.3.开发环境配置</h4><p>每个 Flink 应用都需要依赖一组 Flink 类库。Flink 应用至少需要依赖 Flink APIs。许多应用还会额外依赖连接器类库(比如 Kafka、Cassandra 等)。 当用户运行 Flink 应用时(无论是在 IDEA 环境下进行测试，还是部署在分布式环境下)，运行时类库都必须可用</p>
 <p>开发工具：IntelliJ IDEA</p>
 <p>配置开发Maven依赖：</p>
@@ -117,8 +117,8 @@
 <li>不同Task下的subtask分到同一个TaskSlot，提高数据传输效率</li>
 <li>相同Task下的subtask不会分到同一个TaskSlot，充分利用集群资源</li>
 </ul>
-<p><img src="/img%5Cimage-20211102164126751.png" alt="image-20211102164126751"></p>
-<p><img src="/img%5Cimage-20211102164148028.png" alt="image-20211102164148028"></p>
+<p><img src="/img/image-20211102164126751.png" alt="image-20211102164126751"></p>
+<p><img src="/img/image-20211102164148028.png" alt="image-20211102164148028"></p>
 <h4 id="1-5-Flink并行度设置方式"><a href="#1-5-Flink并行度设置方式" class="headerlink" title="1.5.Flink并行度设置方式"></a>1.5.Flink并行度设置方式</h4><ol>
 <li><p>在算子上设置</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> wordStream = initStream.flatMap(_.split(<span class="string">&quot; &quot;</span>)).setParallelism(<span class="number">2</span>)</span><br></pre></td></tr></table></figure></li>
@@ -136,7 +136,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2020/01/01/Flink-API%E5%BC%80%E7%AF%87/" data-id="ckw5zswwc00000igh36c33bvp" class="article-share-link">
+      <a data-url="http://example.com/2020/01/01/Flink-API%E5%BC%80%E7%AF%87/" data-id="ckw5zx9qq00013xgh0h19b23f" class="article-share-link">
         分享
       </a>
       
