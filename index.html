@@ -114,7 +114,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/11/07/Flink%E6%96%B0%E7%89%B9%E6%80%A7-CDC/" data-id="ckw5s73ld00027zghh4hq29lf" class="article-share-link">
+      <a data-url="http://example.com/2021/11/07/Flink%E6%96%B0%E7%89%B9%E6%80%A7-CDC/" data-id="ckw5zch2a0002omgh8pbw7eit" class="article-share-link">
         分享
       </a>
       
@@ -243,7 +243,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2020/11/19/git%E4%BD%BF%E7%94%A8/" data-id="ckw5s73le00057zgh9wgn1k1u" class="article-share-link">
+      <a data-url="http://example.com/2020/11/19/git%E4%BD%BF%E7%94%A8/" data-id="ckw5zch2c0006omgh9tt9azs0" class="article-share-link">
         分享
       </a>
       
@@ -266,7 +266,7 @@
       
 
 <h2 itemprop="name">
-  <a class="article-title" href="/2020/01/01/Flink%E5%9F%BA%E7%A1%80-Window-Watermark/">Flink基础-Window&amp;Watermark</a>
+  <a class="article-title" href="/2020/01/02/Flink%E5%9F%BA%E7%A1%80-Window-Watermark/">Flink基础-Window&amp;Watermark</a>
 </h2>
 
 
@@ -276,8 +276,8 @@
 
     
     <div class="article-meta">
-      <a href="/2020/01/01/Flink%E5%9F%BA%E7%A1%80-Window-Watermark/" class="article-date">
-  <time datetime="2019-12-31T17:00:00.000Z" itemprop="datePublished">2020-01-01</time>
+      <a href="/2020/01/02/Flink%E5%9F%BA%E7%A1%80-Window-Watermark/" class="article-date">
+  <time datetime="2020-01-01T17:00:00.000Z" itemprop="datePublished">2020-01-02</time>
 </a>
       
     </div>
@@ -442,7 +442,399 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2020/01/01/Flink%E5%9F%BA%E7%A1%80-Window-Watermark/" data-id="ckw5s73le00037zgh9paz9fq1" class="article-share-link">
+      <a data-url="http://example.com/2020/01/02/Flink%E5%9F%BA%E7%A1%80-Window-Watermark/" data-id="ckw5zch2f000domgh6nwz4dmg" class="article-share-link">
+        分享
+      </a>
+      
+    </footer>
+
+  </div>
+
+  
+
+  
+
+</article>
+    
+    <article id="post-Flink-API开篇" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+      
+
+<h2 itemprop="name">
+  <a class="article-title" href="/2020/01/01/Flink-API%E5%BC%80%E7%AF%87/">Flink-API开篇</a>
+</h2>
+
+
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/01/01/Flink-API%E5%BC%80%E7%AF%87/" class="article-date">
+  <time datetime="2020-01-01T07:04:00.000Z" itemprop="datePublished">2020-01-01</time>
+</a>
+      
+    </div>
+    
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+        
+      
+      
+      <h4 id="1-1-Flink-API介绍"><a href="#1-1-Flink-API介绍" class="headerlink" title="1.1.Flink API介绍"></a>1.1.Flink API介绍</h4><p>Flink提供了不同的抽象级别以开发流式或者批处理应用程序</p>
+<p><img src="%5Cimg%5Cimage-20211102160941064.png" alt="image-20211102160941064"></p>
+<ul>
+<li><strong>Stateful Stream Processing</strong> 最低级的抽象接口是状态化的数据流接口（statefulstreaming）。这个接口是通过 ProcessFunction 集成到 DataStream API 中的。该接口允许用户自由的处理来自一个或多个流中的事件，并使用一致的容错状态。另外，用户也可以通过注册event time 和 processing time 处理回调函数的方法来实现复杂的计算</li>
+<li><strong>DataStream/DataSet API</strong> DataStream / DataSet API 是 Flink 提供的核心 API ，DataSet 处理有界的数据集，DataStream 处理有界或者无界的数据流。用户可以通过各种方法（map /flatmap / window / keyby / sum / max / min / avg / join 等）将数据进行转换 / 计算</li>
+<li><strong>Table API</strong> Table API 提供了例如 select、project、join、group-by、aggregate 等操作，使用起来却更加简洁,可以在表与 DataStream/DataSet 之间无缝切换，也允许程序将 Table API 与DataStream 以及 DataSet 混合使用</li>
+<li><strong>SQL</strong> Flink 提供的最高层级的抽象是 SQL 。这一层抽象在语法与表达能力上与 Table API 类似。SQL 抽象与 Table API 交互密切，同时 SQL 查询可以直接在 Table API 定义的表上执行</li>
+</ul>
+<h4 id="1-2-Dataflows数据流图"><a href="#1-2-Dataflows数据流图" class="headerlink" title="1.2.Dataflows数据流图"></a>1.2.Dataflows数据流图</h4><p>在Flink的世界观中，一切都是数据流，所以对于批计算来说，那只是流计算的一个特例而已</p>
+<p>Flink Dataflows是由三部分组成，分别是：source、transformation、sink结束</p>
+<p>source数据源会源源不断的产生数据</p>
+<p>transformation将产生的数据进行各种业务逻辑的数据处理</p>
+<p>最终由sink输出到外部（console、kafka、redis、DB……）</p>
+<p>基于Flink开发的程序都能够映射成一个Dataflows</p>
+<p><img src="%5Cimg%5Cimage-20211102161450067.png" alt="image-20211102161450067"></p>
+<p>当source数据源的数量比较大或计算逻辑相对比较复杂的情况下，需要提高并行度来处理数据，采用并行数据流</p>
+<p>通过设置不同算子的并行度 source并行度设置为2 map也是2…. 代表会启动多个并行的线程来处理数据</p>
+<p><img src="%5Cimg%5Cimage-20211102161638405.png" alt="image-20211102161638405"></p>
+<h4 id="1-3-开发环境配置"><a href="#1-3-开发环境配置" class="headerlink" title="1.3.开发环境配置"></a>1.3.开发环境配置</h4><p>每个 Flink 应用都需要依赖一组 Flink 类库。Flink 应用至少需要依赖 Flink APIs。许多应用还会额外依赖连接器类库(比如 Kafka、Cassandra 等)。 当用户运行 Flink 应用时(无论是在 IDEA 环境下进行测试，还是部署在分布式环境下)，运行时类库都必须可用</p>
+<p>开发工具：IntelliJ IDEA</p>
+<p>配置开发Maven依赖：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span> </span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.flink<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>flink-scala_2.11<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.10.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span> </span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.flink<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>flink-streaming-scala_2.11<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.10.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>注意点：</p>
+<ul>
+<li>如果要将程序打包提交到集群运行，打包的时候不需要包含这些依赖，因为集群环境已经包含了这些依赖，此时依赖的作用域应该设置为provided provided</li>
+<li>Flink 应用在 IntelliJ IDEA 中运行，这些 Flink 核心依赖的作用域需要设置为 <em>compile</em> 而不是<em>provided</em> 。 否则 IntelliJ 不会添加这些依赖到 classpath，会导致应用运行时抛出NoClassDefFountError 异常</li>
+</ul>
+<p>添加打包插件：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.maven.plugins<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-shade-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.1.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">executions</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">execution</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">phase</span>&gt;</span>package<span class="tag">&lt;/<span class="name">phase</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">goals</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">goal</span>&gt;</span>shade<span class="tag">&lt;/<span class="name">goal</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">goals</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">artifactSet</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">excludes</span>&gt;</span></span><br><span class="line">                                <span class="tag">&lt;<span class="name">exclude</span>&gt;</span>com.google.code.findbugs:jsr305<span class="tag">&lt;/<span class="name">exclude</span>&gt;</span></span><br><span class="line">                                <span class="tag">&lt;<span class="name">exclude</span>&gt;</span>org.slf4j:*<span class="tag">&lt;/<span class="name">exclude</span>&gt;</span></span><br><span class="line">                                <span class="tag">&lt;<span class="name">exclude</span>&gt;</span>log4j:*<span class="tag">&lt;/<span class="name">exclude</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;/<span class="name">excludes</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;/<span class="name">artifactSet</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">filters</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">filter</span>&gt;</span> <span class="comment">&lt;!--不要拷贝 META-INF 目录下的签名， 否则会引起 SecurityExceptions 。 --&gt;</span></span><br><span class="line">                                <span class="tag">&lt;<span class="name">artifact</span>&gt;</span>*:*<span class="tag">&lt;/<span class="name">artifact</span>&gt;</span></span><br><span class="line">                                <span class="tag">&lt;<span class="name">excludes</span>&gt;</span></span><br><span class="line">                                    <span class="tag">&lt;<span class="name">exclude</span>&gt;</span>META-INF/*.SF<span class="tag">&lt;/<span class="name">exclude</span>&gt;</span></span><br><span class="line">                                    <span class="tag">&lt;<span class="name">exclude</span>&gt;</span>META-INF/*.DSA<span class="tag">&lt;/<span class="name">exclude</span>&gt;</span></span><br><span class="line">                                    <span class="tag">&lt;<span class="name">exclude</span>&gt;</span>META-INF/*.RSA<span class="tag">&lt;/<span class="name">exclude</span>&gt;</span></span><br><span class="line">                                <span class="tag">&lt;/<span class="name">excludes</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;/<span class="name">filter</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;/<span class="name">filters</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">transformers</span>&gt;</span></span><br><span class="line">                            &lt;transformer</span><br><span class="line">                                    implementation=&quot;org.apache.maven.plugins.shade.resource.ManifestResourceTransfor mer&quot;&gt;</span><br><span class="line">                                <span class="tag">&lt;<span class="name">mainClass</span>&gt;</span>my.programs.main.clazz<span class="tag">&lt;/<span class="name">mainClass</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;/<span class="name">transformer</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;/<span class="name">transformers</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">execution</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">executions</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="WordCount批计算程序"><a href="#WordCount批计算程序" class="headerlink" title="WordCount批计算程序"></a>WordCount批计算程序</h5><p>批计算：统计HDFS文件单词出现的次数</p>
+<p>读取HDFS数据需要添加Hadoop依赖</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.hadoop<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>hadoop-client<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.6.5<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>WordCount代码：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> env = <span class="type">ExecutionEnvironment</span>.getExecutionEnvironment <span class="keyword">val</span> initDS: <span class="type">DataSet</span>[<span class="type">String</span>] = env.readTextFile(<span class="string">&quot;hdfs://node01:9000/flink/data/wc&quot;</span>) <span class="keyword">val</span> restDS: <span class="type">AggregateDataSet</span>[(<span class="type">String</span>, <span class="type">Int</span>)] = initDS.flatMap(_.split(<span class="string">&quot; &quot;</span>)).map((_,<span class="number">1</span>)).groupBy(<span class="number">0</span>).sum(<span class="number">1</span>) restDS.print()</span><br></pre></td></tr></table></figure>
+
+<h5 id="WordCount流计算程序"><a href="#WordCount流计算程序" class="headerlink" title="WordCount流计算程序"></a>WordCount流计算程序</h5><p>流计算：统计数据流中，单词出现的次数</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.xyz</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.flink.streaming.api.scala.<span class="type">StreamExecutionEnvironment</span></span><br><span class="line"><span class="keyword">import</span> org.apache.flink.streaming.api.scala._</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">object</span> <span class="title">Test01</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]): <span class="type">Unit</span> = &#123;</span><br><span class="line">    <span class="comment">//准备环境</span></span><br><span class="line">    <span class="comment">/** * createLocalEnvironment 创建一个本地执行的环境 local * createLocalEnvironmentWithWebUI 创建一个本地执行的环境 同时还开启Web UI的查看 端口 8081 * getExecutionEnvironment 根据你执行的环境创建上下文，比如local cluster */</span></span><br><span class="line">    <span class="keyword">val</span> env = <span class="type">StreamExecutionEnvironment</span>.getExecutionEnvironment</span><br><span class="line">    env.setParallelism(<span class="number">1</span>)</span><br><span class="line">    <span class="comment">/** * DataStream：一组相同类型的元素 组成的数据流 */</span></span><br><span class="line">    <span class="keyword">val</span> initStream: <span class="type">DataStream</span>[<span class="type">String</span>] = env.socketTextStream(<span class="string">&quot;node01&quot;</span>, <span class="number">8888</span>)</span><br><span class="line">    <span class="keyword">val</span> wordStream = initStream.flatMap(_.split(<span class="string">&quot; &quot;</span>))</span><br><span class="line">    <span class="keyword">val</span> pairStream = wordStream.map((_, <span class="number">1</span>))</span><br><span class="line">    <span class="keyword">val</span> keyByStream = pairStream.keyBy(<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">val</span> restStream = keyByStream.sum(<span class="number">1</span>)</span><br><span class="line">    restStream</span><br><span class="line">      .print()</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 6&gt; (msb,1)</span></span><br><span class="line"><span class="comment">     * 1&gt; (,,1)</span></span><br><span class="line"><span class="comment">     * 3&gt; (hello,1)</span></span><br><span class="line"><span class="comment">     * 3&gt; (hello,2)</span></span><br><span class="line"><span class="comment">     * 6&gt; (msb,2)</span></span><br><span class="line"><span class="comment">     * 默认就是有状态的计算</span></span><br><span class="line"><span class="comment">     * 6&gt; 代表是哪一个线程处理的 ** 相同的数据一定是由某一个thread处理 </span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="comment">//启动Flink 任务</span></span><br><span class="line">    env.execute(<span class="string">&quot;first flink job&quot;</span>)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-4-WordCount-Dataflows算子链"><a href="#1-4-WordCount-Dataflows算子链" class="headerlink" title="1.4.WordCount Dataflows算子链"></a>1.4.WordCount Dataflows算子链</h4><p>为了更高效地分布式执行，Flink会尽可能地将operator的subtask链接（chain）在一起形成task。每个task在一个线程中执行。将operators链接成task是非常有效的优化：它能减少线程之间的切换，减少消息的序列化/反序列化，减少数据在缓冲区的交换，减少了延迟的同时提高整体的吞吐量</p>
+<h5 id="Flink任务调度规则"><a href="#Flink任务调度规则" class="headerlink" title="Flink任务调度规则"></a>Flink任务调度规则</h5><ul>
+<li>不同Task下的subtask分到同一个TaskSlot，提高数据传输效率</li>
+<li>相同Task下的subtask不会分到同一个TaskSlot，充分利用集群资源</li>
+</ul>
+<p><img src="%5Cimg%5Cimage-20211102164126751.png" alt="image-20211102164126751"></p>
+<p><img src="%5Cimg%5Cimage-20211102164148028.png" alt="image-20211102164148028"></p>
+<h4 id="1-5-Flink并行度设置方式"><a href="#1-5-Flink并行度设置方式" class="headerlink" title="1.5.Flink并行度设置方式"></a>1.5.Flink并行度设置方式</h4><ol>
+<li><p>在算子上设置</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> wordStream = initStream.flatMap(_.split(<span class="string">&quot; &quot;</span>)).setParallelism(<span class="number">2</span>)</span><br></pre></td></tr></table></figure></li>
+<li><p>在上下文环境中设置</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> env = <span class="type">StreamExecutionEnvironment</span>.getExecutionEnvironment</span><br><span class="line">env.setParallelism(<span class="number">1</span>)</span><br></pre></td></tr></table></figure></li>
+<li><p>client提交Job时设置</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flink run -c com.msb.stream.<span class="type">WordCount</span> -p <span class="number">3</span> <span class="type">StudyFlink</span><span class="number">-1.0</span>-<span class="type">SNAPSHOT</span>.jar</span><br></pre></td></tr></table></figure></li>
+<li><p>在flink-conf.yaml配置文件中设置</p>
+</li>
+</ol>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">parallelism.<span class="keyword">default</span>: <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>这四种设置并行度的方式，优先级依次递减</strong></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2020/01/01/Flink-API%E5%BC%80%E7%AF%87/" data-id="ckw5zch280000omgh7ju458bv" class="article-share-link">
+        分享
+      </a>
+      
+    </footer>
+
+  </div>
+
+  
+
+  
+
+</article>
+    
+    <article id="post-Flink-部署" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+      
+
+<h2 itemprop="name">
+  <a class="article-title" href="/2020/01/01/Flink-%E9%83%A8%E7%BD%B2/">Flink-部署</a>
+</h2>
+
+
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/01/01/Flink-%E9%83%A8%E7%BD%B2/" class="article-date">
+  <time datetime="2020-01-01T05:55:00.000Z" itemprop="datePublished">2020-01-01</time>
+</a>
+      
+    </div>
+    
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+        
+      
+      
+      <h3 id="1-Flink入门篇"><a href="#1-Flink入门篇" class="headerlink" title="1.Flink入门篇"></a>1.Flink入门篇</h3><p>官网下载地址:</p>
+<p><a target="_blank" rel="noopener" href="https://flink.apache.org/downloads.html#apache-flink-1133">https://flink.apache.org/downloads.html#apache-flink-1133</a></p>
+<h4 id="1-1-Flink基本架构"><a href="#1-1-Flink基本架构" class="headerlink" title="1.1.Flink基本架构"></a>1.1.Flink基本架构</h4><p>Flink系统架构中包含了两个角色，分别是JobManager和TaskManager，是一个典型的Master-Slave架构。</p>
+<p>JobManager相当于是Master，TaskManager相当于是Slave</p>
+<p><img src="%5Cimg%5Cimage-20211102144230466.png" alt="image-20211102144230466"></p>
+<h6 id="JobManager（JVM进程）作用"><a href="#JobManager（JVM进程）作用" class="headerlink" title="JobManager（JVM进程）作用"></a>JobManager（JVM进程）作用</h6><p>JobManager负责整个集群的资源管理与任务管理，在一个集群中只能由一个正在工作（active）的JobManager，如果HA集群，那么其他JobManager一定是standby状态</p>
+<p><strong>资源调度</strong></p>
+<ul>
+<li>集群启动，TaskManager会将当前节点的资源信息注册给JobManager，所有TaskManager全部注册完毕，集群启动成功，此时JobManager就掌握整个集群的资源情况</li>
+<li>client提交Application给JobManager，JobManager会根据集群中的资源情况，为当前的Application分配TaskSlot资源</li>
+</ul>
+<p><strong>任务调度</strong></p>
+<ul>
+<li>根据各个TaskManager节点上的资源分发task到TaskSlot中运行</li>
+<li>Job执行过程中，JobManager会根据设置的触发策略触发checkpoint，通知TaskManager开始checkpoint</li>
+<li>任务执行完毕，JobManager会将Job执行的信息反馈给client，并且释放TaskManager资源</li>
+</ul>
+<h6 id="TaskManager（JVM进程）作用"><a href="#TaskManager（JVM进程）作用" class="headerlink" title="TaskManager（JVM进程）作用"></a>TaskManager（JVM进程）作用</h6><ul>
+<li>负责当前节点上的任务运行及当前节点上的资源管理，TaskManager资源通过TaskSlot进行了划分，每个TaskSlot代表的是一份固定资源。例如，具有三个 slots 的 TaskManager 会将其管理的内存资源分成三等份给每个 slot。 划分资源意味着 subtask 之间不会竞争内存资源，但是也意味着它们只拥有固定的资源。注意这里并没有 CPU 隔离，当前 slots 之间只是划分任务的内存资源</li>
+<li>负责TaskManager之间的数据交换</li>
+</ul>
+<h6 id="client客户端"><a href="#client客户端" class="headerlink" title="client客户端"></a>client客户端</h6><p>负责将当前的任务提交给JobManager，提交任务的常用方式：命令提交、web页面提交。获取任务的执行信息</p>
+<h5 id="Flink的特点和优势"><a href="#Flink的特点和优势" class="headerlink" title="Flink的特点和优势"></a>Flink的特点和优势</h5><p>1、同时支持高吞吐、低延迟、高性能</p>
+<p>2、支持事件时间（Event Time）概念，结合Watermark处理乱序数据</p>
+<p>3、支持有状态计算，并且支持多种状态 内存、文件、RocksDB</p>
+<p>4、支持高度灵活的窗口（Window）操作 time、count、session</p>
+<p>5、基于轻量级分布式快照（CheckPoint）实现的容错 保证exactly-once语义</p>
+<p>6、基于JVM实现独立的内存管理</p>
+<p>7、Save Points（保存点）</p>
+<h4 id="1-2-Standalone集群安装-amp-测试"><a href="#1-2-Standalone集群安装-amp-测试" class="headerlink" title="1.2.Standalone集群安装&amp;测试"></a>1.2.Standalone集群安装&amp;测试</h4><p>Standalone是独立部署模式，它不依赖其他平台，不依赖任何的资源调度框架</p>
+<p>Standalone集群是由JobManager、TaskManager两个JVM进程组成</p>
+<p>集群角色划分</p>
+<p><img src="%5Cimg%5Cimage-20211028174216751.png" alt="image-20211028174216751"></p>
+<p><strong>安装步骤</strong></p>
+<p> 1.官网下载Flink安装包</p>
+<p>Apache Flink® 1.10.0 is our latest stable release.现在最稳定的是1.10.0，不建议采用这个版</p>
+<p>本，刚从1.9升级到1.10，会存在一些bug，不建议采用小版本号为0的安装包，所以我们建议使用</p>
+<p>1.9.2版本下载链接:<a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/apache/flflink/flflink-1.9.2/flflink-1.9.2-bin-scala_2">https://mirrors.tuna.tsinghua.edu.cn/apache/flflink/flflink-1.9.2/flflink-1.9.2-bin-scala_2</a>.</p>
+<p>11.tgz</p>
+<ol start="2">
+<li><p>安装包上传到node01节点</p>
+</li>
+<li><p>解压、修改配置文件</p>
+</li>
+</ol>
+<p>解压：tar -zxf flink-1.9.2-bin-scala_2.11.tgz</p>
+<p>修改flink-conf.yaml配置文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">jobmanager.rpc.address: node01 JobManager地址 </span><br><span class="line">jobmanager.rpc.port: 6123 JobManagerRPC通信端口 </span><br><span class="line">jobmanager.heap.size: 1024m JobManager所能使用的堆内存大小</span><br><span class="line">taskmanager.heap.size: 1024m TaskManager所能使用的堆内存大小</span><br><span class="line">taskmanager.numberOfTaskSlots: 2 TaskManager管理的TaskSlot个数，依据当前物理机的 核心数来配置，一般预留出一部分核心（25%）给系统及其他进程使用，一个slot对应一个core。如果 core支持超线程，那么slot个数*2</span><br><span class="line">rest.port: 8081 指定WebUI的访问端口</span><br></pre></td></tr></table></figure>
+
+<p>修改slaves配置文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">node02</span><br><span class="line">node03</span><br><span class="line">node04</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>同步安装包到其他的节点</li>
+</ol>
+<p>同步到node02 scp -r flflink-1.9.2 node02: pwd</p>
+<p>同步到node03 scp -r flflink-1.9.2 node03: pwd</p>
+<p>同步到node04 scp -r flflink-1.9.2 node04: pwd </p>
+<ol start="5">
+<li>node01配置环境变量</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vim ~/.bashrc</span><br><span class="line">export FLINK_HOME=/opt/software/flink/flink-1.9.2</span><br><span class="line">export PATH=$PATH:$FLINK_HOME/bin</span><br><span class="line">source ~/.bashrc</span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>启动standalone集群</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">启动集群：start-cluster.sh</span><br><span class="line">关闭集群：stop-cluster.sh</span><br><span class="line">http://node01:8081/ 可通过rest.port参数自定义端口</span><br></pre></td></tr></table></figure>
+
+<ol start="7">
+<li>查看Flink Web UI页面</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://node01:8081/ 可通过rest.port参数自定义端口</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="%5Cimg%5Cimage-20211028175200869.png" alt="image-20211028175200869"></p>
+<p>提交Job到standalone集群</p>
+<p>常用提交任务的方式有两种，分别是命令提交和Web页面提交</p>
+<ol>
+<li>命令提交</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">flink run -c com.msb.stream.WordCount StudyFlink-1.0-SNAPSHOT.jar</span><br><span class="line"></span><br><span class="line">-c 指定主类</span><br><span class="line">-d 独立运行、后台运行</span><br><span class="line">-p 指定并行度</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>Web页面提交</li>
+</ol>
+<p>在Web中指定Jar包的位置、主类路径、并行数等</p>
+<p>web.submit.enable: true一定是true，否则不支持Web提交Application</p>
+<p><img src="%5Cimg%5Cimage-20211028175451364.png" alt="image-20211028175451364"></p>
+<ol start="3">
+<li>启动scala-shell测试</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">start-scala-shell.sh remote &lt;hostname&gt; &lt;portnumber&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-3-Standalone-HA集群安装-amp-测试"><a href="#1-3-Standalone-HA集群安装-amp-测试" class="headerlink" title="1.3.Standalone HA集群安装&amp;测试"></a>1.3.Standalone HA集群安装&amp;测试</h4><p>JobManager协调每个flink任务部署,它负责调度和资源管理</p>
+<p>默认情况下，每个flink集群只有一个JobManager，这将导致一个单点故障(SPOF single-point-of-failure)：如果JobManager挂了，则不能提交新的任务，并且运行中的程序也会失败。</p>
+<p>使用JobManager HA，集群可以从JobManager故障中恢复，从而避免SPOF</p>
+<p>Standalone模式（独立模式）下JobManager的高可用性的基本思想是，任何时候都有一个 Active JobManager ，并且多个Standby JobManagers 。 Standby JobManagers可以在Master JobManager挂掉的情况下接管集群成为Master JobManager。 这样保证了没有单点故障，一旦某一个Standby JobManager接管集群，程序就可以继续运行。 Standby JobManager和Active JobManager实例之间没有明确区别。 每个JobManager可以成为Active或Standby节点</p>
+<p><img src="%5Cimg%5Cimage-20211102145556454.png" alt="image-20211102145556454"></p>
+<p><strong>集群角色划分</strong></p>
+<p><img src="%5Cimg%5Cimage-20211102145819490.png" alt="image-20211102145819490"></p>
+<p><strong>安装步骤</strong></p>
+<ol>
+<li>修改配置文件conf/flflink-conf.yaml</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">high-availability: zookeeper</span><br><span class="line">high-availability.storageDir: hdfs://node01:9000/flink/ha/ #保存JobManager恢复 所需要的所有元数据信息 </span><br><span class="line">high-availability.zookeeper.quorum: node01:2181,node02:2181,node03:2181 #zookeeper地址</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>修改配置文件conf/masters</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">node01:8081</span><br><span class="line">node02:8081</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li><p>同步文件到各个节点</p>
+</li>
+<li><p>下载支持Hadoop插件并且拷贝到各个节点的安装包的lib目录下</p>
+</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">下载地址：</span><br><span class="line">https://repo.maven.apache.org/maven2/org/apache/flink/flink-shaded-hadoop-2-</span><br><span class="line">uber/2.6.5-10.0/flink-shaded-hadoop-2-uber-2.6.5-10.0.jar</span><br></pre></td></tr></table></figure>
+
+<p>HA集群测试</p>
+<p><a target="_blank" rel="noopener" href="http://node01:8081/">http://node01:8081/</a></p>
+<p><a target="_blank" rel="noopener" href="http://node02:8081/">http://node02:8081/</a></p>
+<p>两个页面一模一样 此版本存在bug</p>
+<h4 id="1-4-Flink-on-Yarn"><a href="#1-4-Flink-on-Yarn" class="headerlink" title="1.4.Flink on Yarn"></a>1.4.Flink on Yarn</h4><p>Flink on Yarn是依托Yarn资源管理器，现在很多分布式任务都可以支持基于Yarn运行，这是在企业中使用最多的方式。Why？ </p>
+<p>（1）基于Yarn的运行模式可以充分使用集群资源，Spark on Yarn、MapReduce on Yarn、Flink on</p>
+<p>Yarn等 多套计算框架都可以基于Yarn运行，充分利用集群资源</p>
+<p>（2）基于Yarn的运行模式降低维护成本</p>
+<p><strong>运行流程</strong></p>
+<p><img src="%5Cimg%5Cimage-20211102150503236.png" alt="image-20211102150503236"></p>
+<ol>
+<li><p> 每当创建一个新flink的yarn session的时候，客户端会首先检查要请求的资源(containers和memory)是否可用。然后，将包含flflink相关的jar包盒配置上传到HDFS</p>
+</li>
+<li><p>客户端会向ResourceManager申请一个yarn container 用以启动ApplicationMaster。由于客户端已经将配置和jar文件上传到HDFS，ApplicationMaster将会下载这些jar和配置，然后启动成功</p>
+</li>
+<li><p>JobManager和AM运行于同一个container</p>
+</li>
+<li><p>AM开始申请启动Flink TaskManager的containers，这些container会从HDFS上下载jar文件和已修改的配置文件。一旦这些步骤完成，flink就可以接受任务了</p>
+</li>
+</ol>
+<h5 id="Flink-on-Yarn两种运行模式"><a href="#Flink-on-Yarn两种运行模式" class="headerlink" title="Flink on Yarn两种运行模式"></a>Flink on Yarn两种运行模式</h5><p>解脱了JobManager的压力 RM做资源管理 JobManager只负责任务管理</p>
+<ul>
+<li>yarn seesion(Start a long-running Flink cluster on YARN)这种方式是在yarn中先启动Flink集群，然后再提交作业，这个Flink集群一直停留再yarn中，一直占据了yarn集群的资源（只是JobManager会一直占用，没有Job运行TaskManager并不会运行）,不管有没有任务运行。这种方式能够降低任务的启动时间</li>
+<li>Run a Flink job on YARN 每次提交一个Flink任务的时候，先去yarn中申请资源启动JobManager和TaskManager，然后在当前集群中运行，任务执行完毕，集群关闭。任务之间互相独立，互不影响，可以最大化的使用集群资源，但是每个任务的启动时间变长了</li>
+</ul>
+<p><strong>配置两种运行模式</strong></p>
+<h6 id="yarn-seesion模式配置"><a href="#yarn-seesion模式配置" class="headerlink" title="yarn seesion模式配置"></a>yarn seesion模式配置</h6><ul>
+<li>Flink on Yarn依赖Yarn集群和HDFS集群，启动Yarn、HDFS集群 start-all.sh</li>
+<li>下载支持Hadoop插件并且拷贝到各个节点的安装包的lib目录下:下载地址：<a target="_blank" rel="noopener" href="https://repo.maven.apache.org/maven2/org/apache/flflink/flflink-shaded-hadoop-2-uber/2.6.5-10.0/flflink-shaded-hadoop-2-uber-2.6.5-10.0.jar">https://repo.maven.apache.org/maven2/org/apache/flflink/flflink-shaded-hadoop-2-uber/2.6.5-10.0/flflink-shaded-hadoop-2-uber-2.6.5-10.0.jar</a></li>
+<li>在yarn中启动Flink集群</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">启动：yarn-session.sh -n 3 -s 3 -nm flink-session -d -q </span><br><span class="line">关闭：yarn application -kill applicationId</span><br><span class="line"></span><br><span class="line">yarn-session选项:</span><br><span class="line">-n,--container &lt;arg&gt;：在yarn中启动container的个数，实质就是TaskManager的个数</span><br><span class="line">-s,--slots &lt;arg&gt;：每个TaskManager管理的Slot个数</span><br><span class="line">-nm,--name &lt;arg&gt;:给当前的yarn-session(Flink集群)起一个名字</span><br><span class="line">-d,--detached:后台独立模式启动，守护进程</span><br><span class="line">-tm,--taskManagerMemory &lt;arg&gt;：TaskManager的内存大小 单位：MB</span><br><span class="line">-jm,--jobManagerMemory &lt;arg&gt;：JobManager的内存大小 单位：MB</span><br><span class="line">-q,--query：显示yarn集群可用资源（内存、core）</span><br></pre></td></tr></table></figure>
+
+<p><img src="%5Cimg%5Cimage-20211102154806981.png" alt="image-20211102154806981"></p>
+<ul>
+<li>提交Flink Job到yarn-session集群中运行</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">flink run -c com.msb.stream.WordCount -yid application_1586794520478_0007 ~/StudyFlink-1.0-SNAPSHOT.jar</span><br><span class="line"></span><br><span class="line">yid：指定yarn-session的ApplicationID</span><br><span class="line">不使用yid也可以，因为在启动yarn-session的时候，在tmp临时目录下已经产生了一个隐藏小文件 </span><br><span class="line">[root@node01 bin]# vim /tmp/.yarn-properties-root</span><br><span class="line"><span class="meta">#</span><span class="bash">Generated YARN properties file</span></span><br><span class="line"><span class="meta">#</span><span class="bash">Mon Apr 13 23:39:43 CST 2020</span></span><br><span class="line">parallelism=9</span><br><span class="line">dynamicPropertiesString=</span><br><span class="line">applicationID=application_1586791887356_0001</span><br></pre></td></tr></table></figure>
+
+<h6 id="Run-a-Flink-job-on-YARN模式配置"><a href="#Run-a-Flink-job-on-YARN模式配置" class="headerlink" title="Run a Flink job on YARN模式配置"></a>Run a Flink job on YARN模式配置</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">flink run -m yarn-cluster -yn 3 -ys 3 -ynm flink-job -c com.msb.stream.WordCount ~/StudyFlink-1.0-SNAPSHOT.jar</span><br><span class="line">-yn,--container &lt;arg&gt; 表示分配容器的数量，也就是TaskManager的数量。</span><br><span class="line">-d,--detached：设置在后台运行。</span><br><span class="line">-yjm,--jobManagerMemory&lt;arg&gt;:设置JobManager的内存，单位是MB。</span><br><span class="line">-ytm，--taskManagerMemory&lt;arg&gt;:设置每个TaskManager的内存，单位是MB。</span><br><span class="line">-ynm,--name:给当前Flink application在Yarn上指定名称。</span><br><span class="line">-yq,--query：显示yarn中可用的资源（内存、cpu核数）</span><br><span class="line">-yqu,--queue&lt;arg&gt; :指定yarn资源队列</span><br><span class="line">-ys,--slots&lt;arg&gt; :每个TaskManager使用的Slot数量。</span><br></pre></td></tr></table></figure>
+
+<h5 id="Flink-on-YARN-HA集群安装-amp-测试"><a href="#Flink-on-YARN-HA集群安装-amp-测试" class="headerlink" title="Flink on YARN HA集群安装&amp;测试"></a>Flink on YARN HA集群安装&amp;测试</h5><p>无论以什么样的模式提交Application到Yarn中运行，都会启动一个yarn-session(Flink 集群)，依然是由JobManager和TaskManager组成，那么JobManager节点如果宕机，那么整个Flink集群就不会正常运转，所以接下来搭建Flink on YARN HA集群</p>
+<p><strong>安装步骤</strong></p>
+<ul>
+<li>修改Hadoop安装包下的yarn-site.xml文件</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.resourcemanager.am.max-attempts<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>10<span class="tag">&lt;/<span class="name">value</span>&gt;</span> </span><br><span class="line">    <span class="tag">&lt;<span class="name">description</span>&gt;</span> </span><br><span class="line">    The maximum number of application master execution attempts AppMaster最大 重试次数</span><br><span class="line">    <span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>修改Flink安装包下的flin-conf.yaml文件</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">high-availability: zookeeper</span><br><span class="line">high-availability.storageDir: hdfs://node01:9000/flink/ha/</span><br><span class="line">high-availability.zookeeper.quorum: node01:2181,node02:2181,node03:2181</span><br></pre></td></tr></table></figure>
+
+<p><strong>HA集群测试</strong></p>
+<p>两种模式都可以测试，因为不管哪种模式都会启动yarn-session</p>
+<p>yarn-session模式测试</p>
+<ul>
+<li>启动yarn-session</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn-session.sh -n 3 -s 3 -nm flink-session -d</span><br></pre></td></tr></table></figure>
+
+<p>通过yarn web ui 找到ApplicationMaster，发现此时的JobManager是在node02启动，现在kill掉 JobManager进程 kill -9 进程号</p>
+<p><img src="%5Cimg%5Cimage-20211102155717734.png" alt="image-20211102155717734"></p>
+<p><img src="%5Cimg%5Cimage-20211102155747764.png" alt="image-20211102155747764"></p>
+<p><img src="%5Cimg%5Cimage-20211102155805687.png" alt="image-20211102155805687"></p>
+<ul>
+<li>再次查看 发现JobManager切换到node03</li>
+</ul>
+<p><img src="%5Cimg%5Cimage-20211102155850049.png" alt="image-20211102155850049"></p>
+<ul>
+<li>查看node03日志</li>
+</ul>
+<p><img src="%5Cimg%5Cimage-20211102155924638.png" alt="image-20211102155924638"></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2020-04-08 22:21:36,044 INFO org.apache.flink.yarn.YarnResourceManager - ResourceManager akka.tcp://flink@node03:60599/user/resourcemanager was granted leadership with fencing token 94c94c3d68ed799374303fad7447418b</span><br></pre></td></tr></table></figure>
+
+<p>取消job 开始Run a Flink job on YARN模式测试</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">flink list</span><br><span class="line">flink canel id</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="Run-a-Flink-job-on-YARN模式测试"><a href="#Run-a-Flink-job-on-YARN模式测试" class="headerlink" title="Run a Flink job on YARN模式测试"></a>Run a Flink job on YARN模式测试</h5><ul>
+<li><p>提交job</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flink run -m yarn-cluster -yn 3 -ys 3 -ynm flink-job -c com.msb.stream.WordCount ~/StudyFlink-1.0-SNAPSHOT.jar</span><br></pre></td></tr></table></figure></li>
+<li><p>停掉JobManager 观察</p>
+</li>
+<li><p>测试完毕，取消job</p>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn application -kill applicationId</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2020/01/01/Flink-%E9%83%A8%E7%BD%B2/" data-id="ckw5zch2a0001omgh0931a6hz" class="article-share-link">
         分享
       </a>
       
@@ -502,7 +894,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/07/05/scala%E5%9F%BA%E7%A1%8002/" data-id="ckw5s73lf00097zghcy6mar8z" class="article-share-link">
+      <a data-url="http://example.com/2019/07/05/scala%E5%9F%BA%E7%A1%8002/" data-id="ckw5zch2c0007omghdu26330f" class="article-share-link">
         分享
       </a>
       
@@ -582,7 +974,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/06/24/scala%E5%9F%BA%E7%A1%80/" data-id="ckw5s73lf00077zghgnuc2ro5" class="article-share-link">
+      <a data-url="http://example.com/2019/06/24/scala%E5%9F%BA%E7%A1%80/" data-id="ckw5zch2d000aomgh2q5n07rr" class="article-share-link">
         分享
       </a>
       
@@ -650,7 +1042,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2019/05/08/MapReduce/" data-id="ckw5s73le00047zgh7x5cafqm" class="article-share-link">
+      <a data-url="http://example.com/2019/05/08/MapReduce/" data-id="ckw5zch2b0005omghfbdacejm" class="article-share-link">
         分享
       </a>
       
@@ -746,7 +1138,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2018/11/19/flask-Python-%E7%BC%96%E5%86%99%E7%9A%84%E8%BD%BB%E9%87%8F%E7%BA%A7-Web-%E5%BA%94%E7%94%A8%E6%A1%86%E6%9E%B6/" data-id="ckw5s73lf00087zgh0vyg9z2m" class="article-share-link">
+      <a data-url="http://example.com/2018/11/19/flask-Python-%E7%BC%96%E5%86%99%E7%9A%84%E8%BD%BB%E9%87%8F%E7%BA%A7-Web-%E5%BA%94%E7%94%A8%E6%A1%86%E6%9E%B6/" data-id="ckw5zch2b0004omghascd94i1" class="article-share-link">
         分享
       </a>
       
@@ -898,357 +1290,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2018/11/01/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE-ubuntu/" data-id="ckw5s73lh000c7zgh300m695t" class="article-share-link">
-        分享
-      </a>
-      
-    </footer>
-
-  </div>
-
-  
-
-  
-
-</article>
-    
-    <article id="post-离线数据仓库建设" class="article article-type-post" itemscope
-  itemprop="blogPost" data-scroll-reveal>
-
-  <div class="article-inner">
-    
-    <header class="article-header">
-      
-
-<h2 itemprop="name">
-  <a class="article-title" href="/2018/05/12/%E7%A6%BB%E7%BA%BF%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93%E5%BB%BA%E8%AE%BE/">离线数据仓库建设</a>
-</h2>
-
-
-
-    </header>
-    
-
-    
-    <div class="article-meta">
-      <a href="/2018/05/12/%E7%A6%BB%E7%BA%BF%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93%E5%BB%BA%E8%AE%BE/" class="article-date">
-  <time datetime="2018-05-12T15:37:00.000Z" itemprop="datePublished">2018-05-12</time>
-</a>
-      
-    </div>
-    
-
-    
-
-    <div class="article-entry" itemprop="articleBody">
-      
-      
-        
-      
-      
-      <h2 id="离线数仓项目搭建流程"><a href="#离线数仓项目搭建流程" class="headerlink" title="离线数仓项目搭建流程"></a>离线数仓项目搭建流程</h2><p>项目背景:电商<br>分享重点:<br>离线数仓演进过程当中遇到的问题&amp;解决方案/思路<br>数据库&amp;数据仓库 范式建模  维度建模<br>维度表设计<br>事实表设计<br>kylin<br>mysql  hive kylin 展示</p>
-<h3 id="1-离线数仓演进过程"><a href="#1-离线数仓演进过程" class="headerlink" title="1.离线数仓演进过程"></a>1.离线数仓演进过程</h3><h4 id="1-1-第一阶段"><a href="#1-1-第一阶段" class="headerlink" title="1.1.第一阶段"></a>1.1.第一阶段</h4><p>统计需求  mysql<br>业务系统：CRM系统、ERP系统、交易系统、商品系统、供应商系统….<br>随着发展 数据去决策<br>交易系统  order库<br>商品系统  item库<br>mysql  –&gt; hive –&gt; excel给到业务方<br>问题：1.烟囱式开发/重复开发 取数<br>延伸需求：建立数仓  –&gt; 数仓架构设计/表名规范/分层的设计 搭建各个主题域的中间层</p>
-<h4 id="1-2-第二阶段"><a href="#1-2-第二阶段" class="headerlink" title="1.2.第二阶段"></a>1.2.第二阶段</h4><p>问题:<br>1.数据量上来之后 数据抽取的操作十分耗费时间 ===&gt; 如何去选择最优的一个数据抽取/存储策略</p>
-<p>2.ETL任务 脚本跑在服务器上面</p>
-<p>每天凌晨 定时在服务器 pull   push</p>
-<p>如果修改代码  忘记提交了  ==&gt; 凌晨任务跑不来</p>
-<p>解决方式:<strong>平台化 ETL开发平台  发布ETL任务</strong></p>
-<p>3.调度问题 crontab 遇到上下游任务有依赖 a任务依赖b b任务依赖c<br>            c  1<br>            b  2 ==》 4<br>            a  3</p>
-<p><strong>依赖调度 azkaban airflow DolphinScheduler</strong></p>
-<h4 id="1-3-第三阶段"><a href="#1-3-第三阶段" class="headerlink" title="1.3.第三阶段"></a>1.3.第三阶段</h4><p>问题:<br>1.随着业务发展  业务系统需要进行一定程度的改造<br>            父子订单  购物车  a b c三个商品==&gt;order_id   子订单<br>                      购物车  trade_id  父订单<br>                      退款只是支持到trade维度<br>            数仓当中有一张order表 下游<br>            批次 有批次  一品多商<br>                 无批次  一品一商<br>            数据血缘</p>
-<p>2.业务方质疑你的数据不准<br>可能原因:数据口径不统一  我真的取错数据了(sql写错了)<br>            gmv 下单金额+优惠券金额<br>                 下单金额</p>
-<p>解决方案:<strong>指标中心</strong></p>
-<p>数据抽取挂了 分表64张  60张 ==&gt; </p>
-<p>解决方案:<strong>数据质量中心(DQC) 监控每天数据条数变化  对应指标</strong></p>
-<p>3.任务跑的慢 sql写的不规范</p>
-<p>hive分区表<br>a 365分区<br>b 365分区</p>
-<p>需求：多维分析  ==&gt; kylin+BI系统<br>     数据血缘 + 指标中心 + 数仓表(数据字典) ==&gt; 元数据中心<br>     BI多了起来 取数 desc xx hue</p>
-<h4 id="1-4-第四阶段"><a href="#1-4-第四阶段" class="headerlink" title="1.4.第四阶段"></a>1.4.第四阶段</h4><p>问题：集群稳定性 cdh</p>
-<p>采集各个系统(数据团队)的关键数据 ==&gt; 图表 离线任务运行时长</p>
-<pre><code> 枚举 trade_type 10 11 12...
-      0:xxx  1:yyy 2:zzz ....
-      case when
-      枚举中心  预警、界面 k-v ==&gt; 码表
-</code></pre>
-<h3 id="2-如何去做数仓架构设计"><a href="#2-如何去做数仓架构设计" class="headerlink" title="2.如何去做数仓架构设计"></a>2.如何去做数仓架构设计</h3><pre><code>数据抽取 sqoop/datax
- 数仓分层
-     ODS operational data store
-         最接近数据源当中的一层 尽量保持和源端的数据格式一样
-     DW
-         DWD  该层保持和ODS层一样的数据粒度  数据清洗(过滤、日期格式转换 时间戳--&gt;yyyy-MM-dd等)的操作
-         DWM  数据中间层 提升数仓公共指标的复用性 减少重复加工
-              交易域 商品域 CRM域 门店域 流量域...
-              下单商品  下单金额 下单时间  支付状态 ...
-         DWS  生成字段比较多的宽表 提供给后续的业务查询
-              select xxx from tbl where dayid=&#39;xxx&#39; group by xx
-     APP 数据应用层
-            report(报表)  严禁读取ods dwd层 中间层建设不完善
-         kylin数据
-         数据加工st_xxx
-     DIM维表
-         数仓通用的维表  时间/地区/类目/商品....
- 数据回流  sync_xxxx脚本 mysql提供给业务系统
-
- 数仓表名、字段名 命名规范
-     数仓里的表在天上飞
-     数仓表名和ETL任务名 保持一致 hive -v -e &quot;insert xxxx select xxxx&quot;
-     ods_t_item_d  ods_t_item_d.sh
-     st_itm_gmv_d  st_itm_gmv_d.sh
-     sync_st_itm_gmv_d.sh select xxx   sqoop命令
- 
-     _d天更新
-     _m月更新
-     _h按小时更新
- 
-     _i增量表 数据是增量
-     _s拉链表
-     ODS层    层级_业务库_mysql表名_d
-              ods_trade_pay_xxx_d/i
-     中间层   层级_主题域_业务过程_[/d/h/m...]
-              dws层 _1d 统计日当天的汇总数据
-                    _nd 统计近n天的汇总数据
-                    _mtd 统计当月累计到统计日的汇总数据
-                    _td  统计的就是历史全量数据
-                    _dth
-     维表     dim_维度名称_d 每日全量表
-              dim_维度名称   全量表
-              dim_维度名称_ds 拉链表 极限存储表
- 
- 技术选型
-     数据抽取  sqoop/datax
-     数仓      Hive    impala Greenplum
-     传统数仓  oracle
-     数据回流  sqoop/datax
-</code></pre>
-<p> 数据平台架构图(离线)</p>
-<p><img src="/img/hdkaslgfi6d.png" alt="upload successful"></p>
-<h3 id="3-数据库-amp-数据仓库"><a href="#3-数据库-amp-数据仓库" class="headerlink" title="3.数据库&amp;数据仓库"></a>3.数据库&amp;数据仓库</h3><pre><code>范式
-第零范式  无重复数据
-第一范式  满足属性不可分
-第二范式  在第一范式的基础上更进一步，确保数据库的表当中每一个字段都只和主键相关
-第三范式  确保数据表中的每一列数据都和主键直接相关，而不能间接相关
-          在第二范式的基础上 属性只直接依赖主键
-
-数据仓库和范式之间存在着一种什么样的关系
-维度建模中的星型模型  在范式理论上是符合第二范式
-            雪花模型  星型模型和雪花模型最大区别在于  维度表是否和事实表直接相连
-
-有冗余的事实表
-    将一些维度信息，比如说用户信息、商品信息 冗余到订单事实表中
-    在范式理论上是符合第一范式
-
-数据库和数据仓库各自的侧重点
-    对于绝大多数的数据仓库设计来说，一般情况下都不会去考虑是否满足第几范式
-    数据库 设计 联机事务处理  OLTP(on-line transaction processing) 各种的增删改查操作
-    数据仓库    联机分析处理  OLAP  面向日常数据分析  数据插入和查询，基本上不会去涉及数据的删除和修改操作
-
-数据库面向事务的设计  数仓面向主题的设计
-业务系统              分系系统
-order_id              历史数据
-尽量避免冗余          刻意的去引入冗余操作
-</code></pre>
-<p> 第一范式<br><img src="/img/diyiimage.png" alt="upload successful"></p>
-<p>第二范式<br><img src="/img/diewreree.png" alt="upload successful"></p>
-<p>第三范式<br><img src="/img/disainaaaaade.png" alt="upload successful"></p>
-<h3 id="4-维度表"><a href="#4-维度表" class="headerlink" title="4.维度表"></a>4.维度表</h3><h4 id="4-1维度的基本概念"><a href="#4-1维度的基本概念" class="headerlink" title="4.1维度的基本概念"></a>4.1维度的基本概念</h4><pre><code>度量 指标  称为 事实
-对于一些环境的描述 称为 维度
-select
-  item,      --&gt; 维度
-  sum(gmv)   --&gt; 聚合指标 
-from tbl
-group by item
-分析交易过程  商品、时间、买家(客户 消费者)、卖家(供应商)  ==&gt; 用于分析指标所需要的一个多样的环境
-
-维度获取方式
-    1.业务定义的  
-    2.数据中去获取
-</code></pre>
-<h3 id="4-2-如何去设计一张维度表"><a href="#4-2-如何去设计一张维度表" class="headerlink" title="4.2.如何去设计一张维度表"></a>4.2.如何去设计一张维度表</h3><pre><code>1.选择维度  商品 时间 地区...
-2. select
-    xxx
-   from
-   (
-         select xx
-   ) as t1
-   left join
-   ...
-   确定一张主维表  t_item
-3.确定相关/需要关联的维表
-  spu  店铺  商家  类目
-  sku
-4.确定维度属性
-  1.尽可能的丰富  下游在使用我们的维度表更方便 统计分析类的操作
-    ID Name
-  2.字段 作为维度 具体的事实
-    通常情况下用于查询的约束条件(where) 或者  用于分组统计(group by)
-    通常参与实际的度量计算  事实
-</code></pre>
-<p>维度的层次结构<br>    上卷  下钻</p>
-<p>类目、地区、品牌是否应该全部存在于一张商品维表当中？<br>规范化<br>    对于大多数的OLTP系统来说，底层的数据模型设计时 通常会采用规范化的方式<br>    将一些维度属性 移到 他们自身所属的表当中，删除冗余数据</p>
-<pre><code>类目 商品 ==&gt; 1:n
-</code></pre>
-<p>反规范化<br>    退化维度  冗余一部分数据  一张平表  打平<br>    易用性比较高  存储成本升高了</p>
-<p>规范化&amp;反规范化.png<br><img src="/img/gjdsjka34f.png" alt="upload successful"></p>
-<p>一致性维度<br>    流量   item pv uv<br>    交易   item gmv<br>    数据探查(交叉探查):将不同业务域(数据域)的商品维度的数据给结合到一块进行展示<br>    item pv uv gmv</p>
-<pre><code>商品维度 流量  a b c
-         交易  b c d e f g
-时间维度 timestamp
-         yyyy-MM-dd
-
-针对这类问题 如何去保证维度的一致性
-    共享维度表
-</code></pre>
-<p>维度整合&amp;拆分<br>    数据仓库的定义：面向主题的、集成的数据集合<br>    表现形式&amp;注意点：<br>        表名、字段名 的 命名规范的统一<br>                        字段类型的统一<br>        业务含义相同的表进行统一，高内聚、低耦合的设计理念<br>            源端 数据形式 差异较小的表进行整合<br>            源端 数据形式 差异很大的表进行拆分</p>
-<pre><code>        主从表设计
-        直接合并 a b 2个bu
-            1 2 3 类目
-                  a
-                  b
-
-            a类目 b类目
-        不合并
-    直接合并
-        垂直整合  类目   bu字段
-                  a
-                  b
-                  c
-                  ..
-        水平整合  打平
-</code></pre>
-<p>维度拆分<br>    水平拆分</p>
-<pre><code>维度设计过程当中，可能会遇到的问题：
-    1.某些维表属性的来源表 产出数据的时间比较早  4   a
-      某些维表属性的来源表 产出数据的时间比较晚  12  b
-                                                     c
-    2.某些维表的属性/字段  热度比较高  使用比较频繁
-      某些维表的属性/字段  热度比较低  使用比较少
-    3.某些维表的属性/字段  经常会变化/不怎么变(稳定)
-主从表 主表 重要的维度属性
-
-设计原则
-    扩展性  粒度不一样  高内聚 低耦合
-    易用性
-    效率
-</code></pre>
-<p>历史数据的归档<br>    归档到oss去<br>    归档策略1：前台商品展示的策略：商品状态 商品是否被删除 更新策略<br>               ==&gt; 对应的下单信息就不会有这批商品<br>               前台商品的归档策略<br>               问题：实现后 维护成本很高<br>    归档策略2：binlog<br>    ===&gt; 了解一下<br>    京东 sku 1.5T  250亿  15亿</p>
-<pre><code>归档策略3：自定义  通过设置数仓表的生命周期
-           ods 3    6.7==》6 5 4
-                      8==》7 6 5
-           dwd 93
-           dw  93
-           ...
-           report 历史全部保留
-           增量表 历史全部保留
-</code></pre>
-<p>缓慢变化维<br>    数仓的重要特点 就是 反应了数据的历史变化<br>    如何去处理维度的变化是整个维度设计过程中的最重要工作<br>    维度的变化实际上是不怎么频繁的<br>    第一种处理方式：重写维度值<br>    第二种处理方式：新增维度行<br>    第三种处理方式：新增维度列<br>    实际生产使用 看场景</p>
-<p>快照维表<br>    快照：某个时间点的状态<br>    快照的周期：多久去获取一次数据  天  h 1min<br>    问题：按天获取快照，如何获取？<br>    item  分区表，以天进行分区<br>    mysql<br>    0601   item1   item<br>    0602   item2   item<br>    …    …     …<br>    0607   item7   item<br>    item表每天都在insert 和 update  拓展：delete?  如果删除的话 是物理删除还是逻辑删除?  is_deleted<br>    ==》<br>    按天进行数据抽取的操作 T+1 数据是延迟1天<br>    0602的凌晨1点  去抽取  mysql端截止到0601 24:00  create_time  update_time(edit_time) dt=20200601<br>    0603<br>    0604<br>    …<br>    0607<br>    …<br>    抽取是全量抽取</p>
-<pre><code>这样的构建方式是否会有问题？
-    第一个性能问题：存储
-    1张表 365个分区
-    n张表 n*365
-    (1+2+3+4+5+6+7+...+365) * 3 or 2  hdfs是3副本(2副本)
-
-    第二个性能问题：抽取性能  业务库的压力
-    sqoop抽取 抽取慢 -m往上加  一定程度上去加快整体的抽取速率
-    凌晨 对多个实例 进行抽取
-           1个实例  会有多个mysql库
-           1个库    会有多张mysql表
-           DBA团队
-</code></pre>
-<p>增量抽取&amp;merge<br>极限存储(拉链表)</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2018/05/12/%E7%A6%BB%E7%BA%BF%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93%E5%BB%BA%E8%AE%BE/" data-id="ckw5s73lg000a7zghfnib5htg" class="article-share-link">
-        分享
-      </a>
-      
-    </footer>
-
-  </div>
-
-  
-
-  
-
-</article>
-    
-    <article id="post-离线数仓建设2" class="article article-type-post" itemscope
-  itemprop="blogPost" data-scroll-reveal>
-
-  <div class="article-inner">
-    
-    <header class="article-header">
-      
-
-<h2 itemprop="name">
-  <a class="article-title" href="/2018/05/12/%E7%A6%BB%E7%BA%BF%E6%95%B0%E4%BB%93%E5%BB%BA%E8%AE%BE2/">离线数仓建设2</a>
-</h2>
-
-
-
-    </header>
-    
-
-    
-    <div class="article-meta">
-      <a href="/2018/05/12/%E7%A6%BB%E7%BA%BF%E6%95%B0%E4%BB%93%E5%BB%BA%E8%AE%BE2/" class="article-date">
-  <time datetime="2018-05-12T06:45:00.000Z" itemprop="datePublished">2018-05-12</time>
-</a>
-      
-    </div>
-    
-
-    
-
-    <div class="article-entry" itemprop="articleBody">
-      
-      
-        
-      
-      
-      <h2 id="1-增量数据同步"><a href="#1-增量数据同步" class="headerlink" title="1.增量数据同步"></a>1.增量数据同步</h2><h3 id="1-1-增量抽取-merge到全量的过程"><a href="#1-1-增量抽取-merge到全量的过程" class="headerlink" title="1.1.增量抽取+merge到全量的过程"></a>1.1.增量抽取+merge到全量的过程</h3><p>ods:增量（每个时间分区）</p>
-<p>dwd:全量（每个时间分区）</p>
-<p>增量数据抽取条件：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">where</span> (create_time <span class="operator">&gt;=</span> <span class="number">2017</span><span class="number">-06</span><span class="number">-01</span> <span class="keyword">or</span> update_time <span class="operator">&gt;=</span> <span class="number">2017</span><span class="number">-06</span><span class="number">-01</span>)</span><br></pre></td></tr></table></figure>
-<p>ods层增量数据合并到dwd层全量数据</p>
-<p>1.确定关联键唯一（一般用id）</p>
-<p>2.</p>
-<p>全量表</p>
-<p>left join</p>
-<p>增量表 on 全量表.id = 增量表.id</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span></span><br><span class="line"><span class="comment">--全量表</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> dwd_order_d(</span><br><span class="line">pay_day string,</span><br><span class="line">trade_no string,</span><br><span class="line">phone string,</span><br><span class="line">pay_amount <span class="type">decimal</span>(<span class="number">18</span>,<span class="number">2</span>),</span><br><span class="line">pay_status <span class="type">int</span>,</span><br><span class="line">update_time string</span><br><span class="line">)</span><br><span class="line"><span class="type">row</span> format delimited fields terminated <span class="keyword">by</span> <span class="string">&#x27;,&#x27;</span></span><br><span class="line">stored <span class="keyword">as</span> textfile;</span><br><span class="line"></span><br><span class="line"><span class="comment">--增量表</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> ods_order_di(</span><br><span class="line">pay_day string,</span><br><span class="line">trade_no string,</span><br><span class="line">phone string,</span><br><span class="line">pay_amount <span class="type">decimal</span>(<span class="number">18</span>,<span class="number">2</span>),</span><br><span class="line">pay_status <span class="type">int</span>,</span><br><span class="line">update_time string</span><br><span class="line">)</span><br><span class="line"><span class="type">row</span> format delimited fields terminated <span class="keyword">by</span> <span class="string">&#x27;,&#x27;</span></span><br><span class="line">stored <span class="keyword">as</span> textfile;</span><br><span class="line"><span class="number">2.</span>数据导入</span><br><span class="line">order_his.txt</span><br><span class="line"><span class="number">2017</span><span class="number">-06</span><span class="number">-01</span>,<span class="number">001</span>,<span class="number">111111</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">2017</span><span class="number">-06</span><span class="number">-01</span></span><br><span class="line"><span class="number">2017</span><span class="number">-06</span><span class="number">-01</span>,<span class="number">002</span>,<span class="number">222222</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">2017</span><span class="number">-06</span><span class="number">-01</span></span><br><span class="line"><span class="number">2017</span><span class="number">-06</span><span class="number">-01</span>,<span class="number">003</span>,<span class="number">333333</span>,<span class="number">3</span>,<span class="number">0</span>,<span class="number">2017</span><span class="number">-06</span><span class="number">-01</span></span><br><span class="line"><span class="number">2017</span><span class="number">-06</span><span class="number">-01</span>,<span class="number">004</span>,<span class="number">444444</span>,<span class="number">4</span>,<span class="number">0</span>,<span class="number">2017</span><span class="number">-06</span><span class="number">-01</span></span><br><span class="line"></span><br><span class="line">order_increment.txt</span><br><span class="line"><span class="number">2017</span><span class="number">-06</span><span class="number">-01</span>,<span class="number">002</span>,<span class="number">222222</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">2017</span><span class="number">-06</span><span class="number">-02</span></span><br><span class="line"><span class="number">2017</span><span class="number">-06</span><span class="number">-01</span>,<span class="number">004</span>,<span class="number">444444</span>,<span class="number">4</span>,<span class="number">1</span>,<span class="number">2017</span><span class="number">-06</span><span class="number">-02</span></span><br><span class="line"><span class="number">2017</span><span class="number">-06</span><span class="number">-02</span>,<span class="number">005</span>,<span class="number">444444</span>,<span class="number">4</span>,<span class="number">0</span>,<span class="number">2017</span><span class="number">-06</span><span class="number">-02</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">load data <span class="keyword">local</span> inpath <span class="string">&#x27;/opt/data/order_his.txt&#x27;</span> overwrite <span class="keyword">into</span> <span class="keyword">table</span> dwd_order_d</span><br><span class="line">load data <span class="keyword">local</span> inpath <span class="string">&#x27;/opt/data/order_increment.txt&#x27;</span> <span class="keyword">into</span> <span class="keyword">table</span> ods_order_di</span><br><span class="line"></span><br><span class="line">写<span class="keyword">sql</span>合并：</span><br><span class="line"><span class="keyword">insert</span> overwrite <span class="keyword">table</span> dwd_order_d</span><br><span class="line"><span class="keyword">select</span></span><br><span class="line">  a.pay_day,</span><br><span class="line">  a.trade_no,</span><br><span class="line">  a.phone,</span><br><span class="line">  a.pay_amount,</span><br><span class="line">  a.pay_status,</span><br><span class="line">  a.update_time</span><br><span class="line"><span class="keyword">from</span></span><br><span class="line">(</span><br><span class="line">   <span class="keyword">select</span></span><br><span class="line">     pay_day,</span><br><span class="line">     trade_no,</span><br><span class="line">     phone,</span><br><span class="line">     pay_amount,</span><br><span class="line">     pay_status,</span><br><span class="line">     update_time</span><br><span class="line">   <span class="keyword">from</span> dwd_order_d</span><br><span class="line">) <span class="keyword">as</span> a</span><br><span class="line"><span class="keyword">left</span> <span class="keyword">join</span></span><br><span class="line">(</span><br><span class="line">   <span class="keyword">select</span></span><br><span class="line">     pay_day,</span><br><span class="line">     trade_no,</span><br><span class="line">     phone,</span><br><span class="line">     pay_amount,</span><br><span class="line">     pay_status,</span><br><span class="line">     update_time</span><br><span class="line">   <span class="keyword">from</span> ods_order_di</span><br><span class="line">) <span class="keyword">as</span> b</span><br><span class="line"><span class="keyword">on</span> a.trade_no <span class="operator">=</span> b.trade_no</span><br><span class="line"><span class="keyword">where</span> b.trade_no <span class="keyword">is</span> <span class="keyword">null</span></span><br><span class="line"><span class="keyword">union</span> <span class="keyword">all</span></span><br><span class="line"><span class="keyword">select</span></span><br><span class="line">  pay_day,</span><br><span class="line"> trade_no,</span><br><span class="line"> phone,</span><br><span class="line"> pay_amount,</span><br><span class="line"> pay_status,</span><br><span class="line"> update_time</span><br><span class="line"><span class="keyword">from</span> ods_order_di</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>增量抽取+merge到全量的过程</p>
-<p>1.抽取性能提升  业务库的压力减少了</p>
-<p>2.数仓中的数据变化</p>
-<p>dwd层 一直都是全量，是没减少的<br>ods层 是减少了  原先天天全量抽取  现在天天增量抽取  但是不明显<br>   因为ods层只保留3天的数据</p>
-<h3 id="1-2-拉链表"><a href="#1-2-拉链表" class="headerlink" title="1.2.拉链表"></a>1.2.拉链表</h3><h4 id="1-2-1-拉链表介绍"><a href="#1-2-1-拉链表介绍" class="headerlink" title="1.2.1.拉链表介绍"></a>1.2.1.拉链表介绍</h4><p>1.多了start_date和end_date这2个字段  标识了所在记录的生命周期</p>
-<p>拉链表的意义是什么</p>
-<p>方式一：全量抽取   ods+dwd 按天分区 天天全量</p>
-<p>dwd数据量(一年数据为例):    <strong>365*每天全量数据</strong></p>
-<p>方式二：增量抽取 + merge到全量表    dwd层时 按天分区 天天全量</p>
-<p>dwd数据量(一年数据为例):<strong>1<em>全量数据 + 364</em>每天全量的数据</strong></p>
-<p>方式三：拉链表  最大的作用就是 降低了非常多的存储<br>dwd数据量(一年数据为例):<strong>初始化拉链表时的全量数据 + 天<em>更新的数据（1</em>全量数据 + 364*每天更新的数据）</strong></p>
-<p>拉链表 能够兼顾一种场景 业务上要看历史上某个时刻的数据</p>
-<h4 id="1-2-2-拉链表实现"><a href="#1-2-2-拉链表实现" class="headerlink" title="1.2.2.拉链表实现"></a>1.2.2.拉链表实现</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--ods层的初始化全量表</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> ods_order_d(</span><br><span class="line">pay_day string,</span><br><span class="line">trade_no string,</span><br><span class="line">phone string,</span><br><span class="line">pay_amount <span class="type">decimal</span>(<span class="number">18</span>,<span class="number">2</span>),</span><br><span class="line">pay_status <span class="type">int</span>,</span><br><span class="line">update_time string</span><br><span class="line">)</span><br><span class="line"><span class="type">row</span> format delimited fields terminated <span class="keyword">by</span> <span class="string">&#x27;,&#x27;</span></span><br><span class="line">stored <span class="keyword">as</span> textfile;</span><br><span class="line">数据导入：</span><br><span class="line">load data <span class="keyword">local</span> inpath <span class="string">&#x27;/opt/data/order_his.txt&#x27;</span> overwrite <span class="keyword">into</span> <span class="keyword">table</span> ods_order_d</span><br><span class="line"></span><br><span class="line"><span class="comment">--ods层的订单更新表</span></span><br><span class="line">ods_order_di</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 拉链表</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> dwd_order_ds(</span><br><span class="line">pay_day string,</span><br><span class="line">trade_no string,</span><br><span class="line">phone string,</span><br><span class="line">pay_amount <span class="type">decimal</span>(<span class="number">18</span>,<span class="number">2</span>),</span><br><span class="line">pay_status <span class="type">int</span>,</span><br><span class="line">start_date string,</span><br><span class="line">end_date string</span><br><span class="line">)</span><br><span class="line"><span class="type">row</span> format delimited fields terminated <span class="keyword">by</span> <span class="string">&#x27;,&#x27;</span></span><br><span class="line">stored <span class="keyword">as</span> textfile;</span><br><span class="line"></span><br><span class="line">第一步：初始化拉链表</span><br><span class="line"><span class="keyword">insert</span> overwrite <span class="keyword">table</span> dwd_order_ds</span><br><span class="line">selectpay_day,trade_no,phone,pay_amount,pay_status,<span class="string">&#x27;2018-06-01&#x27;</span> <span class="keyword">as</span> start_date,<span class="string">&#x27;9999-12-31&#x27;</span> <span class="keyword">as</span> end_date <span class="keyword">from</span> ods_order_d;</span><br><span class="line"></span><br><span class="line">第二步：</span><br><span class="line">	<span class="number">1.</span>对于历史上已经被更新掉的数据  end_date 要从<span class="number">9999</span><span class="number">-12</span><span class="number">-31</span>改为失效的那一天日期</span><br><span class="line">	<span class="number">2.</span>要将新增的记录 <span class="keyword">or</span> 被更新的记录 给<span class="keyword">insert</span>进去  同时将对应的<span class="keyword">start</span> <span class="keyword">end</span>给赋值</span><br><span class="line"><span class="keyword">insert</span> overwrite <span class="keyword">table</span> dwd_order_ds</span><br><span class="line"><span class="keyword">select</span> t.<span class="operator">*</span> <span class="keyword">from</span></span><br><span class="line">(<span class="keyword">select</span> a.pay_day,a.trade_no,a.phone,a.pay_amount,a.pay_status,a.start_date,<span class="keyword">case</span> <span class="keyword">when</span> a.end_date<span class="operator">=</span><span class="string">&#x27;9999-12-31&#x27;</span> <span class="keyword">and</span> b.trade_no <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">null</span> <span class="keyword">then</span> <span class="string">&#x27;2018-06-01&#x27;</span> <span class="keyword">else</span> a.end_date <span class="keyword">end</span> <span class="keyword">as</span> end_date <span class="keyword">from</span> dwd_order_ds <span class="keyword">as</span> a <span class="keyword">left</span> <span class="keyword">join</span> ods_order_di <span class="keyword">as</span> b <span class="keyword">on</span> a.trade_no <span class="operator">=</span> b.trade_no</span><br><span class="line"><span class="keyword">union</span> <span class="keyword">all</span></span><br><span class="line"><span class="keyword">select</span> c.pay_day,c.trade_no,c.phone,c.pay_amount,c.pay_status,</span><br><span class="line"><span class="string">&#x27;2018-06-02&#x27;</span> <span class="keyword">as</span> start_date,<span class="string">&#x27;9999-12-31&#x27;</span> <span class="keyword">as</span> end_date <span class="keyword">from</span> ods_order_di <span class="keyword">as</span> c) <span class="keyword">as</span> t</span><br></pre></td></tr></table></figure>
-
-<h4 id="1-2-3-拉链表缺点"><a href="#1-2-3-拉链表缺点" class="headerlink" title="1.2.3.拉链表缺点"></a>1.2.3.拉链表缺点</h4><h5 id="1-上游数据加字段问题"><a href="#1-上游数据加字段问题" class="headerlink" title="1.上游数据加字段问题"></a>1.上游数据加字段问题</h5><p>mysql端:a字段在2018-06-01加上了 而且a字段很重要 业务统计要用的</p>
-<p>hive端  a字段  2020-06-07才知道 </p>
-<p>1-7号  关于a字段的状态 丢了？1个月后 业务统计又恰好需要历史状态</p>
-<p>mysql业务库上,要加的这个字段a,对于历史数据来说他是有默认值的</p>
-<p>hive端 对于拉链表来说  历史的数据也需要有默认值</p>
-<p><strong>解决方式</strong></p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">insert</span> overwrite xxx</span><br><span class="line"><span class="keyword">select</span> a,b,</span><br><span class="line">...</span><br><span class="line"><span class="number">0</span> <span class="keyword">as</span> new_column</span><br><span class="line"><span class="keyword">from</span> dwd_order_ds</span><br></pre></td></tr></table></figure>
-
-<h5 id="2-上游数据出现脏数据"><a href="#2-上游数据出现脏数据" class="headerlink" title="2.上游数据出现脏数据"></a>2.上游数据出现脏数据</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">以订单数据为例  变化周期是固定   确定业务周期 这些数据过了这个周期是不会再变了</span><br><span class="line">  数据结转  dt(分区字段)  过期  历史  活跃</span><br><span class="line">  	过期   所有生命周期已经无效了的数据</span><br><span class="line">  	历史   不会再做任何变更的数据</span><br><span class="line">  	活跃   在固定业务周期内 还会做变化的数据</span><br></pre></td></tr></table></figure>
-<h5 id="3-注意点"><a href="#3-注意点" class="headerlink" title="3.注意点"></a>3.注意点</h5><p>关联键 一定要和业务开发 确认好 是否能够确保关联的时候不会出问题  </p>
-<h5 id="4-拉链表优化"><a href="#4-拉链表优化" class="headerlink" title="4.拉链表优化"></a>4.拉链表优化</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>存储格式  列式存储 orc</span><br><span class="line"><span class="number">2.</span>指定分区字段  查询能做分区裁剪</span><br><span class="line">		dt</span><br><span class="line">业务上的时间  pay_day,update_time</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2018/05/12/%E7%A6%BB%E7%BA%BF%E6%95%B0%E4%BB%93%E5%BB%BA%E8%AE%BE2/" data-id="ckw5s73lh000b7zgha52uhix0" class="article-share-link">
+      <a data-url="http://example.com/2018/11/01/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE-ubuntu/" data-id="ckw5zch2c0008omgh6oer8nnp" class="article-share-link">
         分享
       </a>
       

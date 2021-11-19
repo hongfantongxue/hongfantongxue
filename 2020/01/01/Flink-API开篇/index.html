@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  
+  
+  <meta name="description" content="记录技术点滴">
+  
+  <title>
+    Flink-API开篇 |
+    
+    个人博客
+  </title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+    
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<script src="/js/pace.min.js"></script>
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <main class="content">
+    <section class="outer">
+  <article id="post-Flink-API开篇" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+      
+
+<h1 class="article-title" itemprop="name">
+  Flink-API开篇
+</h1>
+
+
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/01/01/Flink-API%E5%BC%80%E7%AF%87/" class="article-date">
+  <time datetime="2020-01-01T07:04:00.000Z" itemprop="datePublished">2020-01-01</time>
+</a>
+      
+    </div>
+    
+
+    
+    
+<div class="tocbot"></div>
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+      
+      <h4 id="1-1-Flink-API介绍"><a href="#1-1-Flink-API介绍" class="headerlink" title="1.1.Flink API介绍"></a>1.1.Flink API介绍</h4><p>Flink提供了不同的抽象级别以开发流式或者批处理应用程序</p>
+<p><img src="%5Cimg%5Cimage-20211102160941064.png" alt="image-20211102160941064"></p>
+<ul>
+<li><strong>Stateful Stream Processing</strong> 最低级的抽象接口是状态化的数据流接口（statefulstreaming）。这个接口是通过 ProcessFunction 集成到 DataStream API 中的。该接口允许用户自由的处理来自一个或多个流中的事件，并使用一致的容错状态。另外，用户也可以通过注册event time 和 processing time 处理回调函数的方法来实现复杂的计算</li>
+<li><strong>DataStream/DataSet API</strong> DataStream / DataSet API 是 Flink 提供的核心 API ，DataSet 处理有界的数据集，DataStream 处理有界或者无界的数据流。用户可以通过各种方法（map /flatmap / window / keyby / sum / max / min / avg / join 等）将数据进行转换 / 计算</li>
+<li><strong>Table API</strong> Table API 提供了例如 select、project、join、group-by、aggregate 等操作，使用起来却更加简洁,可以在表与 DataStream/DataSet 之间无缝切换，也允许程序将 Table API 与DataStream 以及 DataSet 混合使用</li>
+<li><strong>SQL</strong> Flink 提供的最高层级的抽象是 SQL 。这一层抽象在语法与表达能力上与 Table API 类似。SQL 抽象与 Table API 交互密切，同时 SQL 查询可以直接在 Table API 定义的表上执行</li>
+</ul>
+<h4 id="1-2-Dataflows数据流图"><a href="#1-2-Dataflows数据流图" class="headerlink" title="1.2.Dataflows数据流图"></a>1.2.Dataflows数据流图</h4><p>在Flink的世界观中，一切都是数据流，所以对于批计算来说，那只是流计算的一个特例而已</p>
+<p>Flink Dataflows是由三部分组成，分别是：source、transformation、sink结束</p>
+<p>source数据源会源源不断的产生数据</p>
+<p>transformation将产生的数据进行各种业务逻辑的数据处理</p>
+<p>最终由sink输出到外部（console、kafka、redis、DB……）</p>
+<p>基于Flink开发的程序都能够映射成一个Dataflows</p>
+<p><img src="%5Cimg%5Cimage-20211102161450067.png" alt="image-20211102161450067"></p>
+<p>当source数据源的数量比较大或计算逻辑相对比较复杂的情况下，需要提高并行度来处理数据，采用并行数据流</p>
+<p>通过设置不同算子的并行度 source并行度设置为2 map也是2…. 代表会启动多个并行的线程来处理数据</p>
+<p><img src="%5Cimg%5Cimage-20211102161638405.png" alt="image-20211102161638405"></p>
+<h4 id="1-3-开发环境配置"><a href="#1-3-开发环境配置" class="headerlink" title="1.3.开发环境配置"></a>1.3.开发环境配置</h4><p>每个 Flink 应用都需要依赖一组 Flink 类库。Flink 应用至少需要依赖 Flink APIs。许多应用还会额外依赖连接器类库(比如 Kafka、Cassandra 等)。 当用户运行 Flink 应用时(无论是在 IDEA 环境下进行测试，还是部署在分布式环境下)，运行时类库都必须可用</p>
+<p>开发工具：IntelliJ IDEA</p>
+<p>配置开发Maven依赖：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span> </span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.flink<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>flink-scala_2.11<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.10.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span> </span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.flink<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>flink-streaming-scala_2.11<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.10.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>注意点：</p>
+<ul>
+<li>如果要将程序打包提交到集群运行，打包的时候不需要包含这些依赖，因为集群环境已经包含了这些依赖，此时依赖的作用域应该设置为provided provided</li>
+<li>Flink 应用在 IntelliJ IDEA 中运行，这些 Flink 核心依赖的作用域需要设置为 <em>compile</em> 而不是<em>provided</em> 。 否则 IntelliJ 不会添加这些依赖到 classpath，会导致应用运行时抛出NoClassDefFountError 异常</li>
+</ul>
+<p>添加打包插件：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.maven.plugins<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-shade-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.1.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">executions</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">execution</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">phase</span>&gt;</span>package<span class="tag">&lt;/<span class="name">phase</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">goals</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">goal</span>&gt;</span>shade<span class="tag">&lt;/<span class="name">goal</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">goals</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">artifactSet</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">excludes</span>&gt;</span></span><br><span class="line">                                <span class="tag">&lt;<span class="name">exclude</span>&gt;</span>com.google.code.findbugs:jsr305<span class="tag">&lt;/<span class="name">exclude</span>&gt;</span></span><br><span class="line">                                <span class="tag">&lt;<span class="name">exclude</span>&gt;</span>org.slf4j:*<span class="tag">&lt;/<span class="name">exclude</span>&gt;</span></span><br><span class="line">                                <span class="tag">&lt;<span class="name">exclude</span>&gt;</span>log4j:*<span class="tag">&lt;/<span class="name">exclude</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;/<span class="name">excludes</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;/<span class="name">artifactSet</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">filters</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">filter</span>&gt;</span> <span class="comment">&lt;!--不要拷贝 META-INF 目录下的签名， 否则会引起 SecurityExceptions 。 --&gt;</span></span><br><span class="line">                                <span class="tag">&lt;<span class="name">artifact</span>&gt;</span>*:*<span class="tag">&lt;/<span class="name">artifact</span>&gt;</span></span><br><span class="line">                                <span class="tag">&lt;<span class="name">excludes</span>&gt;</span></span><br><span class="line">                                    <span class="tag">&lt;<span class="name">exclude</span>&gt;</span>META-INF/*.SF<span class="tag">&lt;/<span class="name">exclude</span>&gt;</span></span><br><span class="line">                                    <span class="tag">&lt;<span class="name">exclude</span>&gt;</span>META-INF/*.DSA<span class="tag">&lt;/<span class="name">exclude</span>&gt;</span></span><br><span class="line">                                    <span class="tag">&lt;<span class="name">exclude</span>&gt;</span>META-INF/*.RSA<span class="tag">&lt;/<span class="name">exclude</span>&gt;</span></span><br><span class="line">                                <span class="tag">&lt;/<span class="name">excludes</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;/<span class="name">filter</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;/<span class="name">filters</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">transformers</span>&gt;</span></span><br><span class="line">                            &lt;transformer</span><br><span class="line">                                    implementation=&quot;org.apache.maven.plugins.shade.resource.ManifestResourceTransfor mer&quot;&gt;</span><br><span class="line">                                <span class="tag">&lt;<span class="name">mainClass</span>&gt;</span>my.programs.main.clazz<span class="tag">&lt;/<span class="name">mainClass</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;/<span class="name">transformer</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;/<span class="name">transformers</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">execution</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">executions</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="WordCount批计算程序"><a href="#WordCount批计算程序" class="headerlink" title="WordCount批计算程序"></a>WordCount批计算程序</h5><p>批计算：统计HDFS文件单词出现的次数</p>
+<p>读取HDFS数据需要添加Hadoop依赖</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.hadoop<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>hadoop-client<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.6.5<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>WordCount代码：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> env = <span class="type">ExecutionEnvironment</span>.getExecutionEnvironment <span class="keyword">val</span> initDS: <span class="type">DataSet</span>[<span class="type">String</span>] = env.readTextFile(<span class="string">&quot;hdfs://node01:9000/flink/data/wc&quot;</span>) <span class="keyword">val</span> restDS: <span class="type">AggregateDataSet</span>[(<span class="type">String</span>, <span class="type">Int</span>)] = initDS.flatMap(_.split(<span class="string">&quot; &quot;</span>)).map((_,<span class="number">1</span>)).groupBy(<span class="number">0</span>).sum(<span class="number">1</span>) restDS.print()</span><br></pre></td></tr></table></figure>
+
+<h5 id="WordCount流计算程序"><a href="#WordCount流计算程序" class="headerlink" title="WordCount流计算程序"></a>WordCount流计算程序</h5><p>流计算：统计数据流中，单词出现的次数</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.xyz</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.flink.streaming.api.scala.<span class="type">StreamExecutionEnvironment</span></span><br><span class="line"><span class="keyword">import</span> org.apache.flink.streaming.api.scala._</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">object</span> <span class="title">Test01</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]): <span class="type">Unit</span> = &#123;</span><br><span class="line">    <span class="comment">//准备环境</span></span><br><span class="line">    <span class="comment">/** * createLocalEnvironment 创建一个本地执行的环境 local * createLocalEnvironmentWithWebUI 创建一个本地执行的环境 同时还开启Web UI的查看 端口 8081 * getExecutionEnvironment 根据你执行的环境创建上下文，比如local cluster */</span></span><br><span class="line">    <span class="keyword">val</span> env = <span class="type">StreamExecutionEnvironment</span>.getExecutionEnvironment</span><br><span class="line">    env.setParallelism(<span class="number">1</span>)</span><br><span class="line">    <span class="comment">/** * DataStream：一组相同类型的元素 组成的数据流 */</span></span><br><span class="line">    <span class="keyword">val</span> initStream: <span class="type">DataStream</span>[<span class="type">String</span>] = env.socketTextStream(<span class="string">&quot;node01&quot;</span>, <span class="number">8888</span>)</span><br><span class="line">    <span class="keyword">val</span> wordStream = initStream.flatMap(_.split(<span class="string">&quot; &quot;</span>))</span><br><span class="line">    <span class="keyword">val</span> pairStream = wordStream.map((_, <span class="number">1</span>))</span><br><span class="line">    <span class="keyword">val</span> keyByStream = pairStream.keyBy(<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">val</span> restStream = keyByStream.sum(<span class="number">1</span>)</span><br><span class="line">    restStream</span><br><span class="line">      .print()</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 6&gt; (msb,1)</span></span><br><span class="line"><span class="comment">     * 1&gt; (,,1)</span></span><br><span class="line"><span class="comment">     * 3&gt; (hello,1)</span></span><br><span class="line"><span class="comment">     * 3&gt; (hello,2)</span></span><br><span class="line"><span class="comment">     * 6&gt; (msb,2)</span></span><br><span class="line"><span class="comment">     * 默认就是有状态的计算</span></span><br><span class="line"><span class="comment">     * 6&gt; 代表是哪一个线程处理的 ** 相同的数据一定是由某一个thread处理 </span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="comment">//启动Flink 任务</span></span><br><span class="line">    env.execute(<span class="string">&quot;first flink job&quot;</span>)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-4-WordCount-Dataflows算子链"><a href="#1-4-WordCount-Dataflows算子链" class="headerlink" title="1.4.WordCount Dataflows算子链"></a>1.4.WordCount Dataflows算子链</h4><p>为了更高效地分布式执行，Flink会尽可能地将operator的subtask链接（chain）在一起形成task。每个task在一个线程中执行。将operators链接成task是非常有效的优化：它能减少线程之间的切换，减少消息的序列化/反序列化，减少数据在缓冲区的交换，减少了延迟的同时提高整体的吞吐量</p>
+<h5 id="Flink任务调度规则"><a href="#Flink任务调度规则" class="headerlink" title="Flink任务调度规则"></a>Flink任务调度规则</h5><ul>
+<li>不同Task下的subtask分到同一个TaskSlot，提高数据传输效率</li>
+<li>相同Task下的subtask不会分到同一个TaskSlot，充分利用集群资源</li>
+</ul>
+<p><img src="%5Cimg%5Cimage-20211102164126751.png" alt="image-20211102164126751"></p>
+<p><img src="%5Cimg%5Cimage-20211102164148028.png" alt="image-20211102164148028"></p>
+<h4 id="1-5-Flink并行度设置方式"><a href="#1-5-Flink并行度设置方式" class="headerlink" title="1.5.Flink并行度设置方式"></a>1.5.Flink并行度设置方式</h4><ol>
+<li><p>在算子上设置</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> wordStream = initStream.flatMap(_.split(<span class="string">&quot; &quot;</span>)).setParallelism(<span class="number">2</span>)</span><br></pre></td></tr></table></figure></li>
+<li><p>在上下文环境中设置</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> env = <span class="type">StreamExecutionEnvironment</span>.getExecutionEnvironment</span><br><span class="line">env.setParallelism(<span class="number">1</span>)</span><br></pre></td></tr></table></figure></li>
+<li><p>client提交Job时设置</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flink run -c com.msb.stream.<span class="type">WordCount</span> -p <span class="number">3</span> <span class="type">StudyFlink</span><span class="number">-1.0</span>-<span class="type">SNAPSHOT</span>.jar</span><br></pre></td></tr></table></figure></li>
+<li><p>在flink-conf.yaml配置文件中设置</p>
+</li>
+</ol>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">parallelism.<span class="keyword">default</span>: <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>这四种设置并行度的方式，优先级依次递减</strong></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2020/01/01/Flink-API%E5%BC%80%E7%AF%87/" data-id="ckw5zch280000omgh7ju458bv" class="article-share-link">
+        分享
+      </a>
+      
+    </footer>
+
+  </div>
+
+  
+  
+<nav class="article-nav">
+  
+  <a href="/2020/01/02/Flink%E5%9F%BA%E7%A1%80-Window-Watermark/" class="article-nav-link">
+    <strong class="article-nav-caption">前一篇</strong>
+    <div class="article-nav-title">
+      
+      Flink基础-Window&amp;Watermark
+      
+    </div>
+  </a>
+  
+  
+  <a href="/2020/01/01/Flink-%E9%83%A8%E7%BD%B2/" class="article-nav-link">
+    <strong class="article-nav-caption">后一篇</strong>
+    <div class="article-nav-title">Flink-部署</div>
+  </a>
+  
+</nav>
+
+  
+
+  
+  
+  
+  
+
+</article>
+</section>
+    <footer class="footer">
+  <div class="outer">
+    <div class="float-right">
+      <ul class="list-inline">
+  
+  <li><i class="fe fe-smile-alt"></i> <span id="busuanzi_value_site_uv"></span></li>
+  
+  <li><i class="fe fe-bookmark"></i> <span id="busuanzi_value_page_pv"></span></li>
+  
+</ul>
+    </div>
+    <ul class="list-inline">
+      <li>个人博客 &copy; 2021</li>
+      
+        <li>ZHWANGART</li>
+      
+      <li>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></li>
+      <li>theme  <a target="_blank" rel="noopener" href="https://github.com/zhwangart/hexo-theme-ocean">Ocean</a></li>
+    </ul>
+  </div>
+</footer>
+  </main>
+  <aside class="sidebar">
+    <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/hexo.svg" alt="个人博客"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">Home</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">Archives</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/gallery">Gallery</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">About</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="搜索">
+        <i class="fe fe-search"></i>
+        搜索
+      </a>
+    </li>
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="fe fe-feed"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+  </aside>
+  
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/copybtn.js"></script>
+
+
+
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+  tocbot.init({
+    tocSelector: '.tocbot',
+    contentSelector: '.article-entry',
+    headingSelector: 'h1, h2, h3, h4, h5, h6',
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    positionFixedSelector: '.tocbot',
+    positionFixedClass: 'is-position-fixed',
+    fixedSidebarOffset: 'auto',
+  });
+</script>
+
+
+
+<script src="/js/ocean.js"></script>
+
+</body>
+
+</html>
