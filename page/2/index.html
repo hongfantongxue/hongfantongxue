@@ -65,6 +65,74 @@
     <h1 class="page-type-title"></h1>
     
     
+    <article id="post-MapReduce" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+      
+
+<h2 itemprop="name">
+  <a class="article-title" href="/2019/05/08/MapReduce/">MapReduce</a>
+</h2>
+
+
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2019/05/08/MapReduce/" class="article-date">
+  <time datetime="2019-05-08T13:59:00.000Z" itemprop="datePublished">2019-05-08</time>
+</a>
+      
+    </div>
+    
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+        
+      
+      
+      <h2 id="1-简介"><a href="#1-简介" class="headerlink" title="1.简介"></a>1.简介</h2><p>map:映射<br>将一组数据按照规则 映射为一组<br>数据条数不会发生变化</p>
+<p>例如：<br>select age+1 from table1;</p>
+<p>reduce:规约 汇总 数据条数会发生变化</p>
+<p>例如：<br>group by</p>
+<p>shuffle 洗牌 数据根据key进行网络传输 规整到一起，按规则计算</p>
+<p>shuffle 因为会网络传输，会拉长计算的时间，能不shuffle就不shuffle</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="2-架构"><a href="#2-架构" class="headerlink" title="2.架构"></a>2.架构</h2><p>计算：cpu+内存</p>
+<p>ResourceManager(rm) 主<br>ApplicationsManager 应用管理器 作业 程序<br>ResourceScheduler     资源管理器 </p>
+<p>NodeManager(nm) 从</p>
+<p>container</p>
+<hr>
+<p>Linux两个机制：<br>1.oom-killer机制</p>
+<p>当Linux服务器某个进程使用内存超标 Linux机器为了保护自己，主动杀死进程释放内存</p>
+<p>2./tmp 目录<br>30天自动删除机制</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/05/08/MapReduce/" data-id="cl19bsogx000giqgh0m8e85mq" class="article-share-link">
+        分享
+      </a>
+      
+    </footer>
+
+  </div>
+
+  
+
+  
+
+</article>
+    
     <article id="post-详解Java反射" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 
@@ -192,7 +260,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2018/12/05/%E8%AF%A6%E8%A7%A3Java%E5%8F%8D%E5%B0%84/" data-id="ckwsub6nd000egmjtcxfn5al5" class="article-share-link">
+      <a data-url="http://example.com/2018/12/05/%E8%AF%A6%E8%A7%A3Java%E5%8F%8D%E5%B0%84/" data-id="cl19bsogw000fiqgh8jvpa24g" class="article-share-link">
         分享
       </a>
       
@@ -288,7 +356,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2018/11/19/flask-Python-%E7%BC%96%E5%86%99%E7%9A%84%E8%BD%BB%E9%87%8F%E7%BA%A7-Web-%E5%BA%94%E7%94%A8%E6%A1%86%E6%9E%B6/" data-id="ckwsub6na0006gmjt4iox6yai" class="article-share-link">
+      <a data-url="http://example.com/2018/11/19/flask-Python-%E7%BC%96%E5%86%99%E7%9A%84%E8%BD%BB%E9%87%8F%E7%BA%A7-Web-%E5%BA%94%E7%94%A8%E6%A1%86%E6%9E%B6/" data-id="cl19bsogu0007iqgh1yj9bud7" class="article-share-link">
         分享
       </a>
       
@@ -440,7 +508,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2018/11/01/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE-ubuntu/" data-id="ckwsub6nd000ggmjtgzbw7bbg" class="article-share-link">
+      <a data-url="http://example.com/2018/11/01/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE-ubuntu/" data-id="cl19bsogw000ciqgh61imamf1" class="article-share-link">
         分享
       </a>
       
@@ -541,7 +609,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2018/05/20/%E6%95%B0%E6%8D%AE%E4%B8%AD%E5%8F%B0%E5%BB%BA%E8%AE%BE/" data-id="ckwsub6nd000fgmjtbmk02blc" class="article-share-link">
+      <a data-url="http://example.com/2018/05/20/%E6%95%B0%E6%8D%AE%E4%B8%AD%E5%8F%B0%E5%BB%BA%E8%AE%BE/" data-id="cl19bsogv000aiqgh78xagv3y" class="article-share-link">
         分享
       </a>
       
@@ -803,7 +871,7 @@ group by item
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2018/05/12/%E7%A6%BB%E7%BA%BF%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93%E5%BB%BA%E8%AE%BE/" data-id="ckwsub6nc000dgmjt1bbo2j08" class="article-share-link">
+      <a data-url="http://example.com/2018/05/12/%E7%A6%BB%E7%BA%BF%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93%E5%BB%BA%E8%AE%BE/" data-id="cl19bsogw000eiqgha9kmhxd6" class="article-share-link">
         分享
       </a>
       
@@ -891,7 +959,7 @@ group by item
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2018/05/12/%E7%A6%BB%E7%BA%BF%E6%95%B0%E4%BB%93%E5%BB%BA%E8%AE%BE2/" data-id="ckwsub6nc000cgmjt10cigvis" class="article-share-link">
+      <a data-url="http://example.com/2018/05/12/%E7%A6%BB%E7%BA%BF%E6%95%B0%E4%BB%93%E5%BB%BA%E8%AE%BE2/" data-id="cl19bsogw000diqghdh640aho" class="article-share-link">
         分享
       </a>
       
@@ -960,7 +1028,7 @@ group by item
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2016/11/19/Tensorflow/" data-id="ckwsub6n90005gmjt3ysqa75n" class="article-share-link">
+      <a data-url="http://example.com/2016/11/19/Tensorflow/" data-id="cl19bsogt0004iqghcayfh4bx" class="article-share-link">
         分享
       </a>
       
@@ -996,7 +1064,7 @@ group by item
 </ul>
     </div>
     <ul class="list-inline">
-      <li>个人博客 &copy; 2021</li>
+      <li>个人博客 &copy; 2022</li>
       
         <li>ZHWANGART</li>
       
